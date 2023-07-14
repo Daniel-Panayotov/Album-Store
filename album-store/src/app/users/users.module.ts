@@ -4,6 +4,7 @@ import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { Routes, RouterModule } from '@angular/router';
 import { ProfileComponent } from './profile/profile.component';
+import { FormsModule } from '@angular/forms';
 
 const routes: Routes = [
   {
@@ -18,6 +19,6 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [RegisterComponent, LoginComponent, ProfileComponent],
-  imports: [CommonModule, RouterModule.forChild(routes)],
+  imports: [CommonModule, FormsModule, RouterModule.forChild(routes)],
 })
 export class UsersModule {}
