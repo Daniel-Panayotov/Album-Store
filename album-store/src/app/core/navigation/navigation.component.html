@@ -36,11 +36,20 @@
         class="input input-bordered w-24 md:w-auto"
       />
     </div>
-    <a routerLink="/users/login" class="btn btn-outline btn-success">Login</a>
-    <a routerLink="/users/register" class="btn btn-outline btn-success"
+
+    <a
+      *ngIf="!isLoggedIn"
+      routerLink="/users/login"
+      class="btn btn-outline btn-success"
+      >Login</a
+    >
+    <a
+      *ngIf="!isLoggedIn"
+      routerLink="/users/register"
+      class="btn btn-outline btn-success"
       >Register</a
     >
-    <!-- <div class="dropdown dropdown-end">
+    <div *ngIf="isLoggedIn" class="dropdown dropdown-end">
       <label tabindex="0" class="btn btn-ghost btn-circle avatar">
         <div class="w-10 rounded-full">
           <img
@@ -57,6 +66,6 @@
         </li>
         <li><a>Logout</a></li>
       </ul>
-    </div> -->
+    </div>
   </div>
 </div>

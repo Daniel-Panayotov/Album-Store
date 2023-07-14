@@ -5,6 +5,7 @@ import { LoginComponent } from './login/login.component';
 import { Routes, RouterModule } from '@angular/router';
 import { ProfileComponent } from './profile/profile.component';
 import { FormsModule } from '@angular/forms';
+import { isLoggedActivate } from '../shared/guards/isLogged.activate';
 
 const routes: Routes = [
   {
@@ -12,7 +13,11 @@ const routes: Routes = [
     children: [
       { path: 'login', component: LoginComponent },
       { path: 'register', component: RegisterComponent },
-      { path: 'profile', component: ProfileComponent },
+      {
+        path: 'profile',
+        canActivate: [isLoggedActivate],
+        component: ProfileComponent,
+      },
     ],
   },
 ];
