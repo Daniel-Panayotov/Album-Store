@@ -12,4 +12,8 @@ export class NavigationComponent {
   get isLoggedIn(): boolean {
     return this.userService.isLoggedIn;
   }
+
+  toggle(): void {
+    this.userService.isLoggedIn = !this.userService.isLoggedIn;
+  }
 }

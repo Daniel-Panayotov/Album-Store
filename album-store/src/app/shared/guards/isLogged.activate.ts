@@ -20,6 +20,6 @@ export class isLoggedActivate implements CanActivate {
     | UrlTree
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree> {
-    return true;
+    return this.userService.isLoggedIn;
   }
 }
