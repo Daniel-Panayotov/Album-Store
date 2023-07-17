@@ -1,6 +1,7 @@
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { UserService } from '../user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -11,7 +12,7 @@ export class RegisterComponent implements AfterViewInit {
   @ViewChild('registerForm') form: NgForm | undefined;
   isBtnDisabled = false;
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private router: Router) {}
 
   ngAfterViewInit(): void {
     this.form?.statusChanges?.subscribe((status) => {
@@ -34,6 +35,7 @@ export class RegisterComponent implements AfterViewInit {
 
     try {
       const data = await this.userService.registerUser(user);
+      this.router.navigate(['/home']);
     } catch (err) {
       console.log(err);
     }

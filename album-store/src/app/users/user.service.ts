@@ -9,6 +9,7 @@ import {
   where,
 } from '@angular/fire/firestore';
 import { User } from '../types/user';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -16,24 +17,22 @@ import { User } from '../types/user';
 export class UserService {
   isLoggedIn: boolean = false;
 
-  constructor(private fs: Firestore) {
-    this.findUser('abdull_100@abv.bg').subscribe((v) => console.log(v));
-  }
+  constructor(private fs: Firestore) {}
 
   registerUser(userData: User): Promise<any> {
     return addDoc(collection(this.fs, 'users'), userData);
   }
 
-  loginUser(userData: User) {
+  loginUser(userData: User): void {
     const { email, password } = userData;
 
     this.findUser(email).subscribe({
       next(user) {
         if (!user[0]) {
-          throw 'wrong email';
+          throw new Error();
         }
         if (user[0]['password'] != password) {
-          throw 'wrong password';
+          throw new Error();
         }
         //set cookie
       },
@@ -43,7 +42,11 @@ export class UserService {
     });
   }
 
-  findUser(email: string) {
+  logout(): void {
+    this.isLoggedIn = false;
+  }
+
+  findUser(email: string): Observable<any> {
     return collectionData(
       query(collection(this.fs, 'users'), where('email', '==', email))
     );
