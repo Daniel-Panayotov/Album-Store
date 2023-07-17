@@ -28,13 +28,10 @@ export class UserService {
 
     this.findUser(email).subscribe({
       next(user) {
-        if (!user[0]) {
-          throw new Error();
+        if (!user[0] || user[0]['password'] != password) {
+          return console.log('bad!');
         }
-        if (user[0]['password'] != password) {
-          throw new Error();
-        }
-        //set cookie
+        console.log('good!');
       },
       error(err) {
         console.log(err);
