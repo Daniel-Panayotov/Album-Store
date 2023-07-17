@@ -24,7 +24,7 @@ export class UserService {
 
   checkUser(): void {
     collectionData(collection(this.fs, 'users'), { idField: 'id' }).subscribe(
-      (users) => console.log(users) //check if user exists
+      (users) => console.log('Stinky!')
     );
   }
 }
