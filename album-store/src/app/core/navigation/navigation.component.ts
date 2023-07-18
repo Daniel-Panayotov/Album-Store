@@ -17,7 +17,12 @@ export class NavigationComponent {
     this.userService.isLoggedIn = !this.userService.isLoggedIn;
   }
 
-  logout(): void {
-    this.userService.logout();
+  async logout() {
+    try {
+      await this.userService.logout();
+      document.cookie = '';
+    } catch (err) {
+      console.log(err);
+    }
   }
 }

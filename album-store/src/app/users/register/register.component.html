@@ -23,14 +23,14 @@
             autocomplete="email"
             class="block w-full rounded-md border-0 py-1.5 text-base-255 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-base-255 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             required
-            pattern="^\w+@[A-Za-z]+.[A-Za-z]+$"
+            pattern="^[\w\.]+@[A-Za-z]+.[A-Za-z]+$"
             ngModel
             #emailInput="ngModel"
           />
         </div>
       </div>
       <div
-        *ngIf="(emailInput.errors?.['required'] || emailInput.errors?.['pattern']) && emailInput.touched"
+        *ngIf="((emailInput.errors?.['required'] || emailInput.errors?.['pattern']) && emailInput.touched) || isEmailInvalid"
         class="alert alert-warning"
       >
         <svg
@@ -65,14 +65,14 @@
             autocomplete="current-password"
             class="block w-full rounded-md border-0 py-1.5 text-base-255 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             required
-            minlength="4"
+            minlength="6"
             ngModel
             #passwordInput="ngModel"
           />
         </div>
       </div>
       <div
-        *ngIf="passwordInput.value?.length < 4 && passwordInput.touched"
+        *ngIf="passwordInput.errors?.['minlength'] && passwordInput.touched"
         class="alert alert-warning"
       >
         <svg
@@ -88,7 +88,7 @@
             d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
           />
         </svg>
-        <span>Warning: Password must be at least 4 characters long</span>
+        <span>Warning: Password must be at least 6 characters long</span>
       </div>
       <div>
         <div class="flex items-center justify-between">
@@ -107,7 +107,7 @@
             class="block w-full rounded-md border-0 py-1.5 text-base-255 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             required
             ngModel
-            minlength="4"
+            minlength="6"
             #repeatInput="ngModel"
           />
         </div>

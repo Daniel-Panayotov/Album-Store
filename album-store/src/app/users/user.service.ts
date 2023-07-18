@@ -1,51 +1,47 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import {
   Firestore,
   collection,
   collectionData,
-  addDoc,
-  setDoc,
   query,
   where,
 } from '@angular/fire/firestore';
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+} from '@angular/fire/auth';
 import { User } from '../types/user';
-import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-export class UserService {
+export class UserService implements OnInit {
   isLoggedIn: boolean = false;
 
   constructor(private fs: Firestore) {}
 
-  registerUser(userData: User): Promise<any> {
-    return addDoc(collection(this.fs, 'users'), userData);
-  }
+  ngOnInit(): void {}
 
-  loginUser(userData: User): void {
+  registerUser(userData: User): Promise<any> {
     const { email, password } = userData;
 
-    this.findUser(email).subscribe({
-      next(user) {
-        if (!user[0] || user[0]['password'] != password) {
-          return console.log('bad!');
-        }
-        console.log('good!');
-      },
-      error(err) {
-        console.log(err);
-      },
-    });
+    const auth = getAuth();
+
+    return createUserWithEmailAndPassword(auth, email, password);
   }
 
-  logout(): void {
-    this.isLoggedIn = false;
+  loginUser(userData: User): Promise<any> {
+    const { email, password } = userData;
+
+    const auth = getAuth();
+
+    return signInWithEmailAndPassword(auth, email, password);
   }
 
-  findUser(email: string): Observable<any> {
-    return collectionData(
-      query(collection(this.fs, 'users'), where('email', '==', email))
-    );
+  logout(): Promise<void> {
+    const auth = getAuth();
+    return signOut(auth);
   }
 }

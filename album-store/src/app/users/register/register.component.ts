@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 export class RegisterComponent implements AfterViewInit {
   @ViewChild('registerForm') form: NgForm | undefined;
   isBtnDisabled = false;
+  isEmailInvalid = false;
 
   constructor(private userService: UserService, private router: Router) {}
 
@@ -31,12 +32,16 @@ export class RegisterComponent implements AfterViewInit {
       return;
     }
 
-    let user = { email, password };
-
     try {
-      const data = await this.userService.registerUser(user);
+      const data = await this.userService.registerUser({ email, password });
+      const token = data._tokenResponse;
+      document.cookie = JSON.stringify(token);
+
       this.router.navigate(['/home']);
-    } catch (err) {
+    } catch (err: any) {
+      if (err.message.includes('email')) {
+        this.isEmailInvalid = true;
+      }
       console.log(err);
     }
   }
