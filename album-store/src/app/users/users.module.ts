@@ -24,6 +24,6 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [RegisterComponent, LoginComponent, ProfileComponent],
-  imports: [CommonModule, FormsModule, RouterModule.forChild(routes)],
+  imports: [CommonModule, FormsModule],
 })
 export class UsersModule {}

@@ -15,15 +15,7 @@ export class RegisterComponent implements AfterViewInit {
 
   constructor(private userService: UserService, private router: Router) {}
 
-  ngAfterViewInit(): void {
-    this.form?.statusChanges?.subscribe((status) => {
-      if (status == 'INVALID') {
-        this.isBtnDisabled = true;
-      } else {
-        this.isBtnDisabled = false;
-      }
-    });
-  }
+  ngAfterViewInit(): void {}
 
   async register() {
     const { email, password, rePassword } = this.form?.value;

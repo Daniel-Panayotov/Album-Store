@@ -14,15 +14,7 @@ export class LoginComponent implements AfterViewInit {
 
   constructor(private userService: UserService, private router: Router) {}
 
-  ngAfterViewInit(): void {
-    this.form?.statusChanges?.subscribe((status) => {
-      if (status == 'INVALID') {
-        this.isBtnDisabled = true;
-      } else {
-        this.isBtnDisabled = false;
-      }
-    });
-  }
+  ngAfterViewInit(): void {}
 
   async login() {
     const { email, password } = this.form?.value;
