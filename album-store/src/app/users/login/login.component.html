@@ -77,7 +77,7 @@
         </div>
       </div>
       <div
-        *ngIf="passwordInput.value?.length < 4 && passwordInput.touched"
+        *ngIf="passwordInput.errors?.['minlength'] && passwordInput.touched"
         class="alert alert-warning"
       >
         <svg

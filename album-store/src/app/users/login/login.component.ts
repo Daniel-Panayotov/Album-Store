@@ -21,8 +21,6 @@ export class LoginComponent implements AfterViewInit {
 
     try {
       const user = await this.userService.loginUser({ email, password });
-      const token = user._tokenResponse;
-      document.cookie = JSON.stringify(token);
 
       this.router.navigate(['/home']);
     } catch (err) {

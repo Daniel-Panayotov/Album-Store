@@ -1,1 +1,3 @@
-export const environment = {};
+export const environment = {
+  TOKEN_KEY: 'token',
+};

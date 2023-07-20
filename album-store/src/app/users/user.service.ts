@@ -1,4 +1,4 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import {
   Firestore,
   collection,
@@ -11,20 +11,48 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
+  UserCredential,
 } from '@angular/fire/auth';
 import { User } from '../types/user';
+import { environment } from 'src/environments/environment.development';
 
 @Injectable({
   providedIn: 'root',
 })
-export class UserService implements OnInit {
-  isLoggedIn: boolean = false;
+export class UserService {
+  isLoggedIn: boolean = !!localStorage.getItem(environment.TOKEN_KEY);
+  unsub: () => void = () => {};
 
-  constructor(private fs: Firestore) {}
+  constructor(private fs: Firestore) {
+    this.setAuthObservable();
+  }
 
-  ngOnInit(): void {}
+  setAuthObservable(): void {
+    const auth = getAuth();
 
-  registerUser(userData: User): Promise<any> {
+    const unsub = auth.onAuthStateChanged(
+      async (user) => {
+        if (user) {
+          try {
+            const jwt = await auth.currentUser?.getIdToken();
+
+            localStorage.setItem(environment.TOKEN_KEY, jwt as string);
+          } catch (err) {
+            console.log(err);
+          }
+        } else {
+          localStorage.removeItem(environment.TOKEN_KEY);
+        }
+
+        this.isLoggedIn = !!localStorage.getItem(environment.TOKEN_KEY);
+      },
+      (err) => console.log(err)
+    );
+
+    this.unsub = unsub;
+  }
+
+  registerUser(userData: User): Promise<UserCredential> {
     const { email, password } = userData;
 
     const auth = getAuth();
@@ -32,7 +60,7 @@ export class UserService implements OnInit {
     return createUserWithEmailAndPassword(auth, email, password);
   }
 
-  loginUser(userData: User): Promise<any> {
+  loginUser(userData: User): Promise<UserCredential> {
     const { email, password } = userData;
 
     const auth = getAuth();

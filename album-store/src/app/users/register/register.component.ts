@@ -26,8 +26,6 @@ export class RegisterComponent implements AfterViewInit {
 
     try {
       const data = await this.userService.registerUser({ email, password });
-      const token = data._tokenResponse;
-      document.cookie = JSON.stringify(token);
 
       this.router.navigate(['/home']);
     } catch (err: any) {
