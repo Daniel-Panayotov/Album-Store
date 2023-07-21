@@ -20,12 +20,16 @@ export class RegisterComponent implements AfterViewInit {
   async register() {
     const { email, password, rePassword } = this.form?.value;
 
+    this.isEmailInvalid = false;
+
     if (password != rePassword) {
       return;
     }
 
     try {
-      const data = await this.userService.registerUser({ email, password });
+      const userData = await this.userService.registerUser({ email, password });
+
+      await this.userService.createUserDbEntry(userData);
 
       this.router.navigate(['/home']);
     } catch (err: any) {

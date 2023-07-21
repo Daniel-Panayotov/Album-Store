@@ -26,7 +26,9 @@
     </ul>
   </div>
   <div class="flex-1">
-    <a class="btn btn-ghost normal-case text-xl" routerLink="/">Album Store</a>
+    <a class="btn btn-ghost normal-case text-xl text-gray-300" routerLink="/"
+      >Album Store</a
+    >
   </div>
   <!-- <button (click)="toggle()">Toggle login</button> -->
   <div class="flex-none gap-2">
@@ -34,7 +36,7 @@
       <input
         type="text"
         placeholder="Search"
-        class="input input-bordered w-24 md:w-auto"
+        class="input input-bordered w-24 md:w-auto text-gray-300"
       />
     </div>
 
@@ -60,12 +62,19 @@
       </label>
       <ul
         tabindex="0"
-        class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
+        class="mt-4 z-[1] p-2 shadow-md shadow-black menu menu-m dropdown-content bg-gray-800 rounded-box w-60 text-gray-300"
       >
         <li>
-          <a routerLink="/users/profile" class="justify-between"> Profile </a>
+          <a
+            routerLink="/users/profile"
+            class="justify-between text-base hover:text-gray-100"
+          >
+            Profile
+          </a>
         </li>
-        <li><a (click)="logout()">Logout</a></li>
+        <li>
+          <a class="text-base hover:text-gray-100" (click)="logout()">Logout</a>
+        </li>
       </ul>
     </div>
   </div>

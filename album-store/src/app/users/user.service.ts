@@ -3,8 +3,11 @@ import {
   Firestore,
   collection,
   collectionData,
+  doc,
   query,
   where,
+  setDoc,
+  addDoc,
 } from '@angular/fire/firestore';
 import {
   getAuth,
@@ -12,6 +15,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
   UserCredential,
+  signInWithCredential,
 } from '@angular/fire/auth';
 import { User } from '../types/user';
 import { environment } from 'src/environments/environment.development';
@@ -46,9 +50,9 @@ export class UserService {
       async (user) => {
         if (user) {
           try {
-            const jwt = await this.auth.currentUser?.getIdToken();
+            const jwt = await user.getIdToken();
 
-            this.LsService.setToken(jwt as string);
+            this.LsService.setToken(jwt);
           } catch (err) {
             console.log(err);
           }
@@ -60,6 +64,37 @@ export class UserService {
       },
       (err) => console.log(err)
     );
+  }
+
+  createUserDbEntry(userData: UserCredential): Promise<void> {
+    const {
+      displayName,
+      email,
+      emailVerified,
+      isAnonymous,
+      phoneNumber,
+      photoURL,
+      providerData,
+      providerId,
+      tenantId,
+      uid,
+      refreshToken,
+    } = userData.user;
+
+    const user = {
+      displayName,
+      email,
+      emailVerified,
+      isAnonymous,
+      phoneNumber,
+      photoURL,
+      providerData,
+      providerId,
+      tenantId,
+      uid,
+      refreshToken,
+    };
+    return setDoc(doc(collection(this.fs, 'users'), userData.user.uid), user);
   }
 
   registerUser(userData: User): Promise<UserCredential> {
