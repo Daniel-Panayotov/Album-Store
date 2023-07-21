@@ -15,61 +15,66 @@ import {
 } from '@angular/fire/auth';
 import { User } from '../types/user';
 import { environment } from 'src/environments/environment.development';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { LocalstorageService } from '../services/localstorage.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  isLoggedIn: boolean = !!localStorage.getItem(environment.TOKEN_KEY);
-  unsub: () => void = () => {};
+  userToken: string | null = this.LsService.getToken();
+  auth = getAuth();
 
-  constructor(private fs: Firestore) {
+  constructor(
+    private fs: Firestore,
+    private jwtHelper: JwtHelperService,
+    private LsService: LocalstorageService
+  ) {
+    this.isTokenExpired();
     this.setAuthObservable();
   }
 
-  setAuthObservable(): void {
-    const auth = getAuth();
+  isTokenExpired() {
+    if (this.jwtHelper.isTokenExpired(this.userToken)) {
+      this.LsService.clearToken();
+      this.userToken = this.LsService.getToken();
+    }
+  }
 
-    const unsub = auth.onAuthStateChanged(
+  setAuthObservable(): void {
+    this.auth.onAuthStateChanged(
       async (user) => {
         if (user) {
           try {
-            const jwt = await auth.currentUser?.getIdToken();
+            const jwt = await this.auth.currentUser?.getIdToken();
 
-            localStorage.setItem(environment.TOKEN_KEY, jwt as string);
+            this.LsService.setToken(jwt as string);
           } catch (err) {
             console.log(err);
           }
         } else {
-          localStorage.removeItem(environment.TOKEN_KEY);
+          this.LsService.clearToken();
         }
 
-        this.isLoggedIn = !!localStorage.getItem(environment.TOKEN_KEY);
+        this.userToken = this.LsService.getToken();
       },
       (err) => console.log(err)
     );
-
-    this.unsub = unsub;
   }
 
   registerUser(userData: User): Promise<UserCredential> {
     const { email, password } = userData;
 
-    const auth = getAuth();
-
-    return createUserWithEmailAndPassword(auth, email, password);
+    return createUserWithEmailAndPassword(this.auth, email, password);
   }
 
   loginUser(userData: User): Promise<UserCredential> {
     const { email, password } = userData;
 
-    const auth = getAuth();
-
-    return signInWithEmailAndPassword(auth, email, password);
+    return signInWithEmailAndPassword(this.auth, email, password);
   }
 
   logout(): Promise<void> {
-    const auth = getAuth();
-    return signOut(auth);
+    return signOut(this.auth);
   }
 }

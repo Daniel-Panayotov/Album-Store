@@ -8,7 +8,10 @@ import { UsersModule } from './users/users.module';
 import { SharedModule } from './shared/shared.module';
 import { provideFirebaseApp, getApp, initializeApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { JwtModule } from '@auth0/angular-jwt';
 import { environment } from 'src/environments/secretEnvironment';
+import * as buildEnv from 'src/environments/environment.development';
+import { TokenInterceptorProvider } from './shared/interceptors/token.interceptor';
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,6 +21,11 @@ import { environment } from 'src/environments/secretEnvironment';
     UsersModule,
     SharedModule,
     AppRoutingModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => localStorage.getItem(buildEnv.environment.TOKEN_KEY),
+      },
+    }),
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideFirestore(() => getFirestore()),
   ],

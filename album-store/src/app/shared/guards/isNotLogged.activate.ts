@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 import { UserService } from 'src/app/users/user.service';
 
 @Injectable({ providedIn: 'root' })
-export class isLoggedActivate implements CanActivate {
+export class isNotLoggedActivate implements CanActivate {
   constructor(private userService: UserService, private router: Router) {}
 
   canActivate(
@@ -21,7 +21,7 @@ export class isLoggedActivate implements CanActivate {
     | UrlTree
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree> {
-    const token = !!this.userService.userToken;
+    const token = !this.userService.userToken;
 
     if (!token) {
       this.router.navigate(['/home']);

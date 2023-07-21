@@ -11,12 +11,12 @@ export class NavigationComponent {
   constructor(private userService: UserService) {}
 
   get isLoggedIn(): boolean {
-    return this.userService.isLoggedIn;
+    return !!this.userService.userToken;
   }
 
-  toggle(): void {
-    this.userService.isLoggedIn = !this.userService.isLoggedIn;
-  }
+  // toggle(): void {
+  //   this.userService.isLoggedIn = !this.userService.isLoggedIn;
+  // }
 
   async logout() {
     try {
