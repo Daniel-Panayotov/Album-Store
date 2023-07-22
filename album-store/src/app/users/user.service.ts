@@ -86,6 +86,7 @@ export class UserService {
     } = userData.user;
 
     const user = {
+      boughtAlbums: [],
       displayName,
       email,
       emailVerified,
