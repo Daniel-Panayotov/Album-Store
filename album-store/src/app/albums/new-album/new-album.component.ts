@@ -10,20 +10,23 @@ import { Router } from '@angular/router';
 })
 export class NewAlbumComponent {
   @ViewChild('albumForm') form: NgForm | undefined;
+
   constructor(private albumService: AlbumService, private router: Router) {}
 
   async createAlbum(): Promise<void> {
-    const album = {
-      albumName: '',
-      band: '',
-      commentList: [],
-      image: '',
-      ratingList: [],
-      uid: '',
-    };
+    const { band, album, image } = this.form?.value;
 
     try {
-      await this.albumService.createAlbum(album);
+      const newAlbum = {
+        album,
+        band,
+        commentList: [],
+        image,
+        ratingList: [],
+        uid: '',
+      };
+
+      await this.albumService.createAlbum(newAlbum);
 
       this.router.navigate(['/home']);
     } catch (err) {

@@ -1,24 +1,13 @@
 import { Injectable } from '@angular/core';
-import {
-  Firestore,
-  collection,
-  collectionData,
-  doc,
-  query,
-  where,
-  setDoc,
-  addDoc,
-} from '@angular/fire/firestore';
+import { Firestore, collection, doc, setDoc } from '@angular/fire/firestore';
 import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
   UserCredential,
-  signInWithCredential,
 } from '@angular/fire/auth';
 import { User } from '../types/user';
-import { environment } from 'src/environments/environment.development';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { LocalstorageService } from '../services/localstorage.service';
 
