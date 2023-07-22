@@ -59,6 +59,10 @@ export class UserService {
     );
   }
 
+  refreshToken(): Promise<string> | undefined {
+    return this.auth.currentUser?.getIdToken(true);
+  }
+
   createUserDbEntry(userData: UserCredential): Promise<void> {
     const {
       displayName,

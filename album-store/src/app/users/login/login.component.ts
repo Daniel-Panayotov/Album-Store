@@ -20,7 +20,9 @@ export class LoginComponent implements AfterViewInit {
     const { email, password } = this.form?.value;
 
     try {
-      const user = await this.userService.loginUser({ email, password });
+      await this.userService.loginUser({ email, password });
+
+      await this.userService.refreshToken();
 
       this.router.navigate(['/home']);
     } catch (err) {

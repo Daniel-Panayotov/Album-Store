@@ -1,0 +1,17 @@
+<div class="card bg-gray-800 shadow shadow-black mt-5 mb-3 ml-7 mr-3">
+  <figure>
+    <img src="{{ image }}" alt="Shoes" />
+  </figure>
+  <div class="card-body">
+    <h2 class="card-title text-gray-300 text-2xl">{{ band }}</h2>
+    <span class="pb-2 text-md tracking-tight">{{ albumName }}</span>
+    <div class="card-actions justify-start">
+      <button
+        routerLink="/albums/details/123"
+        class="btn bg-indigo-600 hover:bg-indigo-500 hover:text-gray-100 text-gray-300"
+      >
+        View more
+      </button>
+    </div>
+  </div>
+</div>

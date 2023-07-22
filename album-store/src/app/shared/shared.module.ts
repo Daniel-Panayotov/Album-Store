@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoaderComponent } from './loader/loader.component';
+import { AlbumCardComponent } from './album-card/album-card.component';
 
 @NgModule({
-  declarations: [LoaderComponent],
+  declarations: [LoaderComponent, AlbumCardComponent],
   imports: [CommonModule],
-  exports: [LoaderComponent],
+  exports: [LoaderComponent, AlbumCardComponent],
 })
 export class SharedModule {}

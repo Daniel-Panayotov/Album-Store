@@ -23,7 +23,6 @@ export class NewAlbumComponent {
         commentList: [],
         image,
         ratingList: [],
-        uid: '',
       };
 
       await this.albumService.createAlbum(newAlbum);

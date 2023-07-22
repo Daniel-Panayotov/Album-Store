@@ -7,5 +7,4 @@ export interface Album {
   commentList: Comment[];
   image: string;
   ratingList: Rating[];
-  uid: string;
 }

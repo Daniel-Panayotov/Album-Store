@@ -5,6 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { FooterComponent } from './footer/footer.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { SharedModule } from '../shared/shared.module';
 
 const routes: Routes = [{ path: 'home', component: HomeComponent }];
 
@@ -15,7 +16,7 @@ const routes: Routes = [{ path: 'home', component: HomeComponent }];
     FooterComponent,
     NotFoundComponent,
   ],
-  imports: [CommonModule, RouterModule.forChild(routes)],
+  imports: [CommonModule, RouterModule.forChild(routes), SharedModule],
   exports: [
     NavigationComponent,
     FooterComponent,
