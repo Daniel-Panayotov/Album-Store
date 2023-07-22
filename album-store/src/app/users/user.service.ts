@@ -34,8 +34,8 @@ export class UserService {
     private jwtHelper: JwtHelperService,
     private LsService: LocalstorageService
   ) {
-    this.isTokenExpired();
     this.setAuthObservable();
+    this.isTokenExpired();
   }
 
   isTokenExpired() {
@@ -50,9 +50,13 @@ export class UserService {
       async (user) => {
         if (user) {
           try {
+            const token = this.LsService.getToken();
             const jwt = await user.getIdToken();
 
             this.LsService.setToken(jwt);
+            if (token != jwt && token != null) {
+              this.LsService.clearToken();
+            }
           } catch (err) {
             console.log(err);
           }

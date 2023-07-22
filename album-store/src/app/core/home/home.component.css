@@ -1,4 +1,13 @@
-p {
-  display: flex;
-  justify-content: center;
+img {
+  height: 15rem;
+  width: 15rem;
+}
+
+.round {
+  border-radius: 10px;
+}
+
+.card {
+  max-width: 15rem;
+  max-height: 27.25rem;
 }

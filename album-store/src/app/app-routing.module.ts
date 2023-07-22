@@ -7,7 +7,14 @@ const routes: Routes = [
   {
     path: 'users',
     loadChildren: () =>
-      import('./users/users-routing.module').then((m) => m.AppRoutingModule),
+      import('./users/users-routing.module').then((m) => m.UsersRoutingModule),
+  },
+  {
+    path: 'albums',
+    loadChildren: () =>
+      import('./albums/albums-routing.module').then(
+        (m) => m.AlbumsRoutingModule
+      ),
   },
   { path: '**', component: NotFoundComponent },
 ];

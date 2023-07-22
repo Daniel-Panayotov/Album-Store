@@ -12,10 +12,12 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { environment } from 'src/environments/secretEnvironment';
 import * as buildEnv from 'src/environments/environment.development';
 import { TokenInterceptorProvider } from './shared/interceptors/token.interceptor';
+import { AlbumsModule } from './albums/albums.module';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
+    AlbumsModule,
     BrowserModule,
     CoreModule,
     UsersModule,
