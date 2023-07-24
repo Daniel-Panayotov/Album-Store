@@ -1,1 +1,148 @@
-<p>edit-album works!</p>
+<div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+  <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+    <h2
+      class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-300"
+    >
+      Edit an album
+    </h2>
+  </div>
+
+  <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+    <form class="space-y-6" #albumForm="ngForm" (ngSubmit)="editAlbum()">
+      <div>
+        <label
+          for="band"
+          class="block text-sm font-medium leading-6 text-gray-300"
+          >Band name</label
+        >
+        <div class="mt-2">
+          <input
+            id="band"
+            name="band"
+            type="text"
+            autocomplete="band"
+            class="block w-full rounded-md border-0 py-1.5 text-base-255 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-base-255 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            [ngModel]="album['band']"
+            required
+            ngModel
+            minlength="4"
+            #bandNameInput="ngModel"
+          />
+        </div>
+      </div>
+      <div
+        *ngIf="bandNameInput.touched && (bandNameInput.errors?.['required'] || bandNameInput.errors?.['minlength'] )"
+        class="alert alert-warning"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="stroke-current shrink-0 h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+          />
+        </svg>
+        <span>Warning: Band names must be at least 4 characters long</span>
+      </div>
+
+      <div>
+        <div class="flex items-center justify-between">
+          <label
+            for="album"
+            class="block text-sm font-medium leading-6 text-gray-300"
+            >Album name</label
+          >
+        </div>
+        <div class="mt-2">
+          <input
+            id="album"
+            name="album"
+            type="text"
+            autocomplete="album name"
+            class="block w-full rounded-md border-0 py-1.5 text-base-255 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            [ngModel]="album['album']"
+            required
+            minlength="3"
+            ngModel
+            #albumNameInput="ngModel"
+          />
+        </div>
+      </div>
+      <div
+        *ngIf="albumNameInput.touched && (albumNameInput.errors?.['minlength'] || albumNameInput.errors?.['required'])"
+        class="alert alert-warning"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="stroke-current shrink-0 h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+          />
+        </svg>
+        <span>Warning: Album name must be at least 3 characters long</span>
+      </div>
+      <div>
+        <div class="flex items-center justify-between">
+          <label
+            for="image"
+            class="block text-sm font-medium leading-6 text-gray-300"
+            >Album image</label
+          >
+        </div>
+        <div class="mt-2">
+          <input
+            id="image"
+            name="image"
+            type="url"
+            autocomplete="album image"
+            class="block w-full rounded-md border-0 py-1.5 text-base-255 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            [ngModel]="album['image']"
+            required
+            ngModel
+            pattern="^https:\/\/[\w\/\\\.-]+\.(jpg|png)$"
+            #imageInput="ngModel"
+          />
+        </div>
+      </div>
+      <div
+        *ngIf="imageInput.touched && (imageInput.errors?.['required'] || imageInput.errors?.['pattern'])"
+        class="alert alert-warning"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="stroke-current shrink-0 h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+          />
+        </svg>
+        <span>Warning: Invalid image url!</span>
+      </div>
+
+      <div>
+        <button
+          [disabled]="albumForm.invalid"
+          class="flex w-full tracking-wide justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+        >
+          Edit
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

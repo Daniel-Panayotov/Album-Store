@@ -28,7 +28,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
         catchError((err) => {
           console.log(err);
 
-          return of(err);
+          return of([]);
         })
       )
       .subscribe((album) => {

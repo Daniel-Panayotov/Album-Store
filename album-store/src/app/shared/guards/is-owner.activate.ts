@@ -7,11 +7,16 @@ import {
   UrlTree,
 } from '@angular/router';
 import { Observable } from 'rxjs';
+import { AlbumService } from 'src/app/albums/album.service';
 import { UserService } from 'src/app/users/user.service';
 
 @Injectable({ providedIn: 'root' })
 export class isOwnerActivate implements CanActivate {
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(
+    private userService: UserService,
+    private albumService: AlbumService,
+    private router: Router
+  ) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -21,6 +26,9 @@ export class isOwnerActivate implements CanActivate {
     | UrlTree
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree> {
+    const user = this.userService.userData;
+    const id = route.params['id'];
+
     return true;
   }
 }

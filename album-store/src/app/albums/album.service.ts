@@ -36,6 +36,10 @@ export class AlbumService {
     );
   }
 
+  getOne(id: string): Observable<DocumentData> {
+    return docData(doc(this.fs, `albums/${id}`), { idField: 'id' });
+  }
+
   getWithComments(album: DocumentData): Observable<DocumentData> {
     const commentRefs: string[] = album['commentList'].map(
       (comment: Comment) => comment.user.id
