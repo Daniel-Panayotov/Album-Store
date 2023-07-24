@@ -11,8 +11,8 @@ import {
   docData,
 } from '@angular/fire/firestore';
 import { Album } from '../types/album';
-import { Observable, map, pipe, of, switchMap } from 'rxjs';
-import { Comment, ProcessedComment } from '../types/comment';
+import { Observable, map, of, switchMap } from 'rxjs';
+import { Comment } from '../types/comment';
 
 @Injectable({
   providedIn: 'root',

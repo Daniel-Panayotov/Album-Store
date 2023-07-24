@@ -6,6 +6,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
   UserCredential,
+  ParsedToken,
 } from '@angular/fire/auth';
 import { User } from '../types/user';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -56,6 +57,10 @@ export class UserService {
       },
       (err) => console.log(err)
     );
+  }
+
+  get userData(): ParsedToken | null {
+    return this.jwtHelper.decodeToken(this.userToken as string);
   }
 
   refreshToken(): Promise<string> | undefined {

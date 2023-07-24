@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AlbumService } from '../album.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subject, Subscription, of, takeUntil } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { Subject, of, takeUntil } from 'rxjs';
 import { switchMap, map, catchError } from 'rxjs/operators';
 
 @Component({
