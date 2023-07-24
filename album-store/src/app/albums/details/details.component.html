@@ -10,7 +10,11 @@
         <div class="flex justify-between flex-col">
           <span>Band Name: {{ album["band"] }}</span>
           <span>Album Name: {{ album["album"] }}</span>
-          <a class="btn btn-outline btn-success">Edit</a>
+          <a
+            routerLink="/albums/edit/{{ album['id'] }}"
+            class="btn btn-outline btn-success"
+            >Edit</a
+          >
         </div>
       </div>
     </div>

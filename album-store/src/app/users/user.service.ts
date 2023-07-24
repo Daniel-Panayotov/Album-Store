@@ -60,7 +60,12 @@ export class UserService {
   }
 
   get userData(): ParsedToken | null {
-    return this.jwtHelper.decodeToken(this.userToken as string);
+    let val = null;
+
+    if (this.userToken) {
+      val = this.jwtHelper.decodeToken(this.userToken);
+    }
+    return val;
   }
 
   refreshToken(): Promise<string> | undefined {

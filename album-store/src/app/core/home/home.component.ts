@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DocumentData } from '@angular/fire/firestore';
 import { AlbumService } from 'src/app/albums/album.service';
-import { Album } from 'src/app/types/album';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -10,22 +10,24 @@ import { Album } from 'src/app/types/album';
 })
 export class HomeComponent implements OnInit, OnDestroy {
   albums: DocumentData[] = [];
-  unsubscribe = () => {};
+  unsubscribe: Subject<void> = new Subject<void>();
 
   constructor(private albumService: AlbumService) {}
 
   ngOnInit(): void {
-    const subscription = this.albumService.getAll().subscribe(
-      (albums) => {
-        this.albums = albums;
-      },
-      (err) => console.log(err)
-    );
-
-    this.unsubscribe = subscription.unsubscribe;
+    this.albumService
+      .getAll()
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe(
+        (albums: DocumentData[]) => {
+          this.albums = albums;
+        },
+        (err) => console.log(err)
+      );
   }
 
   ngOnDestroy(): void {
-    this.unsubscribe();
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
   }
 }

@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { isLoggedActivate } from '../shared/guards/isLogged.activate';
 import { NewAlbumComponent } from './new-album/new-album.component';
 import { DetailsComponent } from './details/details.component';
+import { EditAlbumComponent } from './edit-album/edit-album.component';
+import { isOwnerActivate } from '../shared/guards/is-owner.activate';
 
 const routes: Routes = [
   {
@@ -11,6 +13,11 @@ const routes: Routes = [
     component: NewAlbumComponent,
   },
   { path: 'details/:id', component: DetailsComponent },
+  {
+    path: 'edit/:id',
+    canActivate: [isOwnerActivate],
+    component: EditAlbumComponent,
+  },
 ];
 
 @NgModule({
