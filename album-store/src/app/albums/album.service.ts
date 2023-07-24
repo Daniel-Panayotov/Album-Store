@@ -13,6 +13,7 @@ import {
 import { Album } from '../types/album';
 import { Observable, map, of, switchMap } from 'rxjs';
 import { Comment } from '../types/comment';
+import { AlbumData } from '../types/albumData';
 
 @Injectable({
   providedIn: 'root',
@@ -21,23 +22,31 @@ export class AlbumService {
   constructor(private fs: Firestore) {}
 
   createAlbum(album: Album): Promise<void> {
-    return setDoc(doc(collection(this.fs, 'albums')), album);
+    const id = doc(collection(this.fs, 'id')).id;
+    album.id = id;
+    return setDoc(doc(collection(this.fs, 'albums'), id), album);
+  }
+
+  updateAlbum(album: AlbumData): Promise<void> {
+    const id = album.id;
+
+    return setDoc(doc(collection(this.fs, 'albums'), id), album);
   }
 
   getAll(): Observable<DocumentData[]> {
-    return collectionData(collection(this.fs, 'albums'), { idField: 'id' });
+    return collectionData(collection(this.fs, 'albums'));
+  }
+
+  getOne(id: string): Observable<DocumentData> {
+    return docData(doc(this.fs, `albums/${id}`));
   }
 
   getOnePopulated(id: string): Observable<DocumentData> {
-    return docData(doc(this.fs, `albums/${id}`), { idField: 'id' }).pipe(
+    return docData(doc(this.fs, `albums/${id}`)).pipe(
       switchMap((album: DocumentData) =>
         album['commentList'][0] ? this.getWithComments(album) : of(album)
       )
     );
-  }
-
-  getOne(id: string): Observable<DocumentData> {
-    return docData(doc(this.fs, `albums/${id}`), { idField: 'id' });
   }
 
   getWithComments(album: DocumentData): Observable<DocumentData> {

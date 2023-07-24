@@ -32,8 +32,6 @@ export class DetailsComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe((album) => {
-        console.log(album);
-
         this.album = album;
       });
   }

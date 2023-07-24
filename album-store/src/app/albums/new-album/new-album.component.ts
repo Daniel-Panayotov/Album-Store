@@ -32,6 +32,7 @@ export class NewAlbumComponent {
         image,
         ratingList: [],
         owner,
+        id: '',
       };
 
       await this.albumService.createAlbum(newAlbum);

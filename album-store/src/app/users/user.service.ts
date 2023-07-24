@@ -59,7 +59,7 @@ export class UserService {
     );
   }
 
-  get userData(): ParsedToken | null {
+  get userData(): any | null {
     let val = null;
 
     if (this.userToken) {

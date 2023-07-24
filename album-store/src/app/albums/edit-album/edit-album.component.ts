@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Subject, switchMap, catchError, takeUntil, map, of } from 'rxjs';
 import { AlbumService } from '../album.service';
 import { DocumentData } from '@angular/fire/firestore';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 
 @Component({
@@ -12,22 +12,49 @@ import { NgForm } from '@angular/forms';
 })
 export class EditAlbumComponent implements OnInit, OnDestroy {
   @ViewChild('albumForm') form: NgForm | undefined;
-  unsubscribe: Subject<void> = new Subject<void>();
-  album: DocumentData = [];
+  unsubscribe$$: Subject<void> = new Subject<void>();
+  album: DocumentData = {
+    band: 'Loading...',
+    album: 'Loading...',
+    image: 'Loading...',
+  };
 
   constructor(
     private albumService: AlbumService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
-  editAlbum() {}
+  async editAlbum(): Promise<void> {
+    const { band, album, image } = this.form?.value;
+
+    const { id, owner, ratingList, commentList } = this.album;
+
+    const newAlbum = {
+      band,
+      image,
+      album,
+      id,
+      owner,
+      ratingList,
+      commentList,
+    };
+
+    try {
+      await this.albumService.updateAlbum(newAlbum);
+
+      this.router.navigate([`/home`]);
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   ngOnInit(): void {
     this.route.params
       .pipe(
         map((params) => params['id']),
         switchMap((id) => this.albumService.getOne(id)),
-        takeUntil(this.unsubscribe),
+        takeUntil(this.unsubscribe$$),
         catchError((err) => {
           console.log(err);
 
@@ -38,7 +65,7 @@ export class EditAlbumComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.unsubscribe.next();
-    this.unsubscribe.complete();
+    this.unsubscribe$$.next();
+    this.unsubscribe$$.complete();
   }
 }

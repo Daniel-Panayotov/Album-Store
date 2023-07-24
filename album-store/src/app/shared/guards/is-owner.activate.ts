@@ -6,7 +6,7 @@ import {
   RouterStateSnapshot,
   UrlTree,
 } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, map, catchError, of } from 'rxjs';
 import { AlbumService } from 'src/app/albums/album.service';
 import { UserService } from 'src/app/users/user.service';
 
@@ -27,8 +27,21 @@ export class isOwnerActivate implements CanActivate {
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree> {
     const user = this.userService.userData;
-    const id = route.params['id'];
+    const albumId = route.params['id'];
 
-    return true;
+    return this.albumService.getOne(albumId).pipe(
+      map((album) => {
+        if (album['owner'] == user?.['user_id']) {
+          return true;
+        }
+
+        this.router.navigate(['/home']);
+        return false;
+      }),
+      catchError((err) => {
+        console.log(err);
+        return of(false);
+      })
+    );
   }
 }

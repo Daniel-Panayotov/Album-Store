@@ -4,7 +4,13 @@
   <div class="">
     <div class="m-10 flex flex-row">
       <div class="round overflow-hidden">
-        <img src="{{ album['image'] }}" alt="" />
+        <figure>
+          <img
+            class="text-lg text-gray-300"
+            src="{{ album['image'] }}"
+            alt="Album cover"
+          />
+        </figure>
       </div>
       <div class="flex mx-10 my-5 text-3xl text-gray-300">
         <div class="flex justify-between flex-col">
