@@ -1,1 +1,19 @@
-<p>details works!</p>
+<div
+  class="bg-gray-800 flex flex-col z-10 shadow-lg shadow-black mx-96 mt-10 round"
+>
+  <div class="">
+    <div class="m-10 flex flex-row">
+      <div class="round overflow-hidden">
+        <img src="{{ album['image'] }}" alt="" />
+      </div>
+      <div class="flex mx-10 my-5 text-3xl text-gray-300">
+        <div class="flex justify-between flex-col">
+          <span>Band Name: {{ album["band"] }}</span>
+          <span>Album Name: {{ album["album"] }}</span>
+          <a class="btn btn-outline btn-success">Edit</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div></div>
+</div>

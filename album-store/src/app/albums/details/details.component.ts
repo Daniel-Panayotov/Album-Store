@@ -3,6 +3,7 @@ import { AlbumService } from '../album.service';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, of, takeUntil } from 'rxjs';
 import { switchMap, map, catchError } from 'rxjs/operators';
+import { DocumentData } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-details',
@@ -11,6 +12,7 @@ import { switchMap, map, catchError } from 'rxjs/operators';
 })
 export class DetailsComponent implements OnInit, OnDestroy {
   unsubscribe$$: Subject<void> = new Subject<void>();
+  album: DocumentData = [];
 
   constructor(
     private albumService: AlbumService,
@@ -29,7 +31,11 @@ export class DetailsComponent implements OnInit, OnDestroy {
           return of(err);
         })
       )
-      .subscribe((album) => console.log(album));
+      .subscribe((album) => {
+        console.log(album);
+
+        this.album = album;
+      });
   }
 
   ngOnDestroy(): void {
