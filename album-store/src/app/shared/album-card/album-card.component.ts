@@ -20,4 +20,8 @@ export class AlbumCardComponent {
   get image() {
     return this.album?.['image'];
   }
+
+  get id() {
+    return this.album?.['id'];
+  }
 }

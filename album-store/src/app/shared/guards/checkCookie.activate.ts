@@ -21,7 +21,7 @@ export class checkCookieActivate implements CanActivate {
     | UrlTree
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree> {
-    console.log(1);
+    this.userService.isTokenExpired();
 
     return true;
   }

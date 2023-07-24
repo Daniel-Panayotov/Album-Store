@@ -6,9 +6,13 @@ import {
   setDoc,
   collectionData,
   DocumentData,
+  where,
+  query,
+  docData,
 } from '@angular/fire/firestore';
 import { Album } from '../types/album';
-import { Observable } from 'rxjs';
+import { Observable, map, pipe, of, switchMap } from 'rxjs';
+import { Comment, ProcessedComment } from '../types/comment';
 
 @Injectable({
   providedIn: 'root',
@@ -22,5 +26,41 @@ export class AlbumService {
 
   getAll(): Observable<DocumentData[]> {
     return collectionData(collection(this.fs, 'albums'), { idField: 'id' });
+  }
+
+  getOnePopulated(id: string): Observable<DocumentData> {
+    return docData(doc(this.fs, `albums/${id}`), { idField: 'id' }).pipe(
+      switchMap((album: DocumentData) =>
+        album['commentList'][0] ? this.getWithComments(album) : of(album)
+      )
+    );
+  }
+
+  getWithComments(album: DocumentData): Observable<DocumentData> {
+    const commentRefs: string[] = album['commentList'].map(
+      (comment: Comment) => comment.user.id
+    );
+
+    const usersQuery = query(
+      collection(this.fs, 'users'),
+      where('uid', 'in', commentRefs)
+    );
+
+    return collectionData(usersQuery).pipe(
+      map((users: DocumentData[]) => {
+        album['commentList'] = album['commentList'].map((comment: Comment) => {
+          const user = users.find(
+            (user: DocumentData) => user['uid'] == comment['user'].id
+          );
+
+          return {
+            comment: comment['comment'],
+            user,
+          };
+        });
+
+        return album;
+      })
+    );
   }
 }

@@ -30,7 +30,6 @@ export class UserService {
   isTokenExpired() {
     if (this.jwtHelper.isTokenExpired(this.userToken)) {
       this.LsService.clearToken();
-      this.userToken = this.LsService.getToken();
     }
   }
 
