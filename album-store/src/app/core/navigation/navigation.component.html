@@ -15,11 +15,16 @@
   </div>
   <div class="flex-none gap-2 right-0 absolute mr-2">
     <div class="form-control">
-      <input
-        type="text"
-        placeholder="Search"
-        class="input input-bordered w-24 md:w-auto text-gray-300"
-      />
+      <form #searchForm="ngForm" (ngSubmit)="findAlbums(searchForm)">
+        <input
+          type="text"
+          placeholder="Search full album"
+          name="search"
+          class="input input-bordered w-24 md:w-auto text-gray-300"
+          ngModel
+          #search="ngModel"
+        />
+      </form>
     </div>
 
     <a

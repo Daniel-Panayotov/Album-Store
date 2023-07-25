@@ -9,9 +9,11 @@ import {
   where,
   query,
   docData,
+  Query,
+  CollectionReference,
 } from '@angular/fire/firestore';
 import { Album } from '../types/album';
-import { Observable, map, of, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, map, of, switchMap } from 'rxjs';
 import { Comment } from '../types/comment';
 import { AlbumData } from '../types/albumData';
 
@@ -19,6 +21,8 @@ import { AlbumData } from '../types/albumData';
   providedIn: 'root',
 })
 export class AlbumService {
+  homeAlbums$$ = new BehaviorSubject('');
+
   constructor(private fs: Firestore) {}
 
   createAlbum(album: Album): Promise<void> {
@@ -33,8 +37,19 @@ export class AlbumService {
     return setDoc(doc(collection(this.fs, 'albums'), id), album);
   }
 
-  getAll(): Observable<DocumentData[]> {
-    return collectionData(collection(this.fs, 'albums'));
+  getAll(search: string): Observable<DocumentData[]> {
+    let albumQuery: Query | CollectionReference<DocumentData> = collection(
+      this.fs,
+      'albums'
+    );
+
+    if (search != '') {
+      albumQuery = query(
+        collection(this.fs, 'albums'),
+        where('album', 'in', [search])
+      );
+    }
+    return collectionData(albumQuery);
   }
 
   getOne(id: string): Observable<DocumentData> {
