@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AlbumService } from 'src/app/albums/album.service';
 import { UserService } from 'src/app/users/user.service';
 
@@ -11,7 +12,8 @@ import { UserService } from 'src/app/users/user.service';
 export class NavigationComponent implements OnInit, OnDestroy {
   constructor(
     private userService: UserService,
-    private albumService: AlbumService
+    private albumService: AlbumService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {}
@@ -20,6 +22,13 @@ export class NavigationComponent implements OnInit, OnDestroy {
 
   findAlbums(form: NgForm) {
     const { search } = form.value;
+
+    const url = this.router.routerState.snapshot.url;
+
+    if (url != '/home') {
+      this.router.navigate(['/home']);
+    }
+
     this.albumService.homeAlbums$$.next(search);
   }
 

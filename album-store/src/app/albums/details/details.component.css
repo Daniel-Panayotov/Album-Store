@@ -6,3 +6,7 @@ img {
   height: 17rem;
   width: 17rem;
 }
+
+.border {
+  min-width: 45em;
+}
