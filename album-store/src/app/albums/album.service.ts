@@ -46,7 +46,7 @@ export class AlbumService {
     if (search != '') {
       albumQuery = query(
         collection(this.fs, 'albums'),
-        where('album', 'in', [search])
+        where('band', 'in', [search])
       );
     }
     return collectionData(albumQuery);
