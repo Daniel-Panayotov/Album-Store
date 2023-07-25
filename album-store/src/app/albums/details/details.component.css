@@ -2,11 +2,25 @@
   border-radius: 10px;
 }
 
-img {
+.marginer {
+  margin-left: 30rem;
+  margin-right: 30rem;
+}
+
+.album-cover {
   height: 17rem;
   width: 17rem;
 }
 
 .border {
   min-width: 45em;
+}
+
+a {
+  width: 7rem;
+  height: auto;
+}
+
+.bad {
+  width: fit-content;
 }

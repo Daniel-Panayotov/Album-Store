@@ -1,0 +1,43 @@
+<li class="flex justify-between gap-x-6 py-5">
+  <div class="flex flex-row">
+    <div class="flex gap-x-4">
+      <img
+        class="h-12 w-12 flex-none rounded-full bg-gray-50"
+        src="{{
+          user.photoURL != null
+            ? user.photoURL
+            : 'https://winaero.com/blog/wp-content/uploads/2019/09/Chrome-Incognito-Mode-Icon-256.png'
+        }}"
+        alt=""
+      />
+      <div class="min-w-0 flex-auto badname">
+        <p class="text-sm font-semibold leading-6 text-gray-300">
+          {{ user.displayName ? user.displayName : user.email }}
+        </p>
+      </div>
+    </div>
+    <div class="ml-10">
+      <textarea
+        cols="50"
+        rows="2"
+        class="bg-transparent pl-5 text-lg text-gray-300 border border-gray"
+        [value]="comment['comment']"
+        disabled
+      ></textarea>
+    </div>
+  </div>
+  <div class="hidden sm:flex sm:flex-col sm:items-end">
+    <div class="dropdown dropdown-right dropdown-end">
+      <label tabindex="0" class="btn btn-outline btn-success m-1 text-2xl"
+        >&#8942;</label
+      >
+      <ul
+        tabindex="0"
+        class="dropdown-content z-[1] menu p-2 shadow-md shadow-black bg-gray-800 rounded-box w-52"
+      >
+        <li><a>Edit</a></li>
+        <li><a (click)="deleteComment()">Delete</a></li>
+      </ul>
+    </div>
+  </div>
+</li>

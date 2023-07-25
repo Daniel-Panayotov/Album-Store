@@ -1,39 +1,46 @@
 <div
   class="bg-gray-800 flex flex-col z-10 shadow-lg shadow-black mx-96 mt-10 round"
 >
-  <div>
-    <div class="m-10 flex flex-row">
-      <div class="round overflow-hidden">
-        <figure>
-          <img
-            class="text-lg text-gray-300"
-            src="{{ album['image'] }}"
-            alt="Album cover"
-          />
-        </figure>
+  <div class="ml-10 m-5 flex flex-row">
+    <div class="round overflow-hidden">
+      <figure>
+        <img
+          class="text-lg text-gray-300 album-cover"
+          src="{{ album['image'] }}"
+          alt="Album cover"
+        />
+      </figure>
+    </div>
+    <div class="flex flex-col justify-between mx-10 my-5">
+      <div class="flex flex-col text-3xl text-gray-300 mx-20">
+        <span class="mb-7">Band Name: {{ album["band"] }}</span>
+        <span>Album Name: {{ album["album"] }}</span>
       </div>
-      <div class="flex flex-col justify-between ml-10">
-        <div class="flex flex-row justify-between border border-gray-600 p-5">
-          <div class="flex-col">
-            <div class="border-2 p-2 border-[#0AFFA5] text-xs text-[#0AFFA5]">
-              SCORE
-            </div>
-            <div>0</div>
-          </div>
-          <div class="flex flex-col justify-center text-lg text-gray-300 mr-40">
-            <span>Band Name: {{ album["band"] }}</span>
-            <span>Album Name: {{ album["album"] }}</span>
-          </div>
-        </div>
-        <div class="flex flex-row">
+      <div class="flex flex-row mx-20">
+        <a
+          routerLink="/albums/edit/{{ album['id'] }}"
+          class="btn btn-outline btn-success mr-10"
+          >Comment</a
+        >
+        <ng-container *ngIf="isOwner">
           <a
             routerLink="/albums/edit/{{ album['id'] }}"
-            class="btn btn-outline btn-success"
+            class="btn btn-outline btn-success mr-10"
             >Edit</a
           >
-        </div>
+          <a (click)="deleteAlbum()" class="btn btn-outline btn-success"
+            >Delete</a
+          >
+        </ng-container>
       </div>
     </div>
   </div>
-  <div></div>
+  <div class="ml-10 m-5 divide-y divide-gray-400">
+    <p class="flex justify-center text-lg text-gray-300 mb-2">Comments</p>
+    <ul role="list" class="divide-y divide-gray-100">
+      <div *ngFor="let comment of album['commentList']; let i = index">
+        <app-comment [comment]="comment" [index]="i" />
+      </div>
+    </ul>
+  </div>
 </div>

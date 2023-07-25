@@ -11,9 +11,10 @@ import {
   docData,
   Query,
   CollectionReference,
+  deleteDoc,
 } from '@angular/fire/firestore';
 import { Album } from '../types/album';
-import { BehaviorSubject, Observable, map, of, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, map, of, switchMap } from 'rxjs';
 import { Comment } from '../types/comment';
 import { AlbumData } from '../types/albumData';
 
@@ -21,9 +22,14 @@ import { AlbumData } from '../types/albumData';
   providedIn: 'root',
 })
 export class AlbumService {
-  homeAlbums$$ = new BehaviorSubject('');
+  homeAlbums$$ = new BehaviorSubject<string>('');
+  commentDel$$ = new Subject<number>();
 
   constructor(private fs: Firestore) {}
+
+  deleteAlbum(id: string): Promise<void> {
+    return deleteDoc(doc(collection(this.fs, 'albums'), id));
+  }
 
   createAlbum(album: Album): Promise<void> {
     const id = doc(collection(this.fs, 'id')).id;
@@ -55,6 +61,8 @@ export class AlbumService {
   getOne(id: string): Observable<DocumentData> {
     return docData(doc(this.fs, `albums/${id}`));
   }
+
+  deleteComment(id: number) {}
 
   getOnePopulated(id: string): Observable<DocumentData> {
     return docData(doc(this.fs, `albums/${id}`)).pipe(
