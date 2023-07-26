@@ -5,7 +5,6 @@ import { DetailsComponent } from './details/details.component';
 import { FormsModule } from '@angular/forms';
 import { EditAlbumComponent } from './edit-album/edit-album.component';
 import { RouterModule } from '@angular/router';
-import { CommentComponent } from '../shared/comment/comment.component';
 import { SharedModule } from '../shared/shared.module';
 
 @NgModule({

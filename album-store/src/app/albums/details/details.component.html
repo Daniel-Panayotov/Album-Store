@@ -39,7 +39,7 @@
     <p class="flex justify-center text-lg text-gray-300 mb-2">Comments</p>
     <ul role="list" class="divide-y divide-gray-100">
       <div *ngFor="let comment of album['commentList']; let i = index">
-        <app-comment [comment]="comment" [index]="i" />
+        <app-comment [comment]="comment" [index]="i" [user]="user" />
       </div>
     </ul>
   </div>

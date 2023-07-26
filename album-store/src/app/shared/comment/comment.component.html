@@ -4,15 +4,15 @@
       <img
         class="h-12 w-12 flex-none rounded-full bg-gray-50"
         src="{{
-          user.photoURL != null
-            ? user.photoURL
+          owner.photoURL != null
+            ? owner.photoURL
             : 'https://winaero.com/blog/wp-content/uploads/2019/09/Chrome-Incognito-Mode-Icon-256.png'
         }}"
         alt=""
       />
       <div class="min-w-0 flex-auto badname">
         <p class="text-sm font-semibold leading-6 text-gray-300">
-          {{ user.displayName ? user.displayName : user.email }}
+          {{ owner.displayName ? owner.displayName : owner.email }}
         </p>
       </div>
     </div>
@@ -26,7 +26,7 @@
       ></textarea>
     </div>
   </div>
-  <div class="hidden sm:flex sm:flex-col sm:items-end">
+  <div *ngIf="isOwner" class="hidden sm:flex sm:flex-col sm:items-end">
     <div class="dropdown dropdown-right dropdown-end">
       <label tabindex="0" class="btn btn-outline btn-success m-1 text-2xl"
         >&#8942;</label

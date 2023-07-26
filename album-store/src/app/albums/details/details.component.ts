@@ -63,4 +63,8 @@ export class DetailsComponent implements OnInit, OnDestroy {
     this.unsubscribe$$.next();
     this.unsubscribe$$.complete();
   }
+
+  get user() {
+    return this.userService.userData;
+  }
 }
