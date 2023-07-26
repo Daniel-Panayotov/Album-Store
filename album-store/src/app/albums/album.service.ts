@@ -37,7 +37,7 @@ export class AlbumService {
     return setDoc(doc(collection(this.fs, 'albums'), id), album);
   }
 
-  updateAlbum(album: AlbumData): Promise<void> {
+  updateAlbum(album: AlbumData | DocumentData): Promise<void> {
     const id = album.id;
 
     return setDoc(doc(collection(this.fs, 'albums'), id), album);

@@ -16,6 +16,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
   unsubscribe$$: Subject<void> = new Subject<void>();
   albumPopulated: DocumentData = [];
   isOwner: boolean = false;
+  isLoading: boolean = true;
 
   constructor(
     private albumService: AlbumService,
@@ -74,15 +75,19 @@ export class DetailsComponent implements OnInit, OnDestroy {
         this.albumPopulated = album;
 
         this.isOwner =
-          this.userService.userData['user_id'] == this.albumPopulated['owner']
-            ? true
-            : false;
+          this.user['user_id'] == this.albumPopulated['owner'] ? true : false;
+
+        this.isLoading = false;
       });
   }
 
   ngOnDestroy(): void {
     this.unsubscribe$$.next();
     this.unsubscribe$$.complete();
+  }
+
+  get areThereComments(): boolean {
+    return !!this.albumPopulated['commentList'][0];
   }
 
   get user() {

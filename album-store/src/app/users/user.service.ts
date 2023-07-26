@@ -1,12 +1,20 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collection, doc, setDoc } from '@angular/fire/firestore';
+import {
+  DocumentData,
+  DocumentReference,
+  Firestore,
+  collection,
+  doc,
+  docData,
+  setDoc,
+} from '@angular/fire/firestore';
 import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
   UserCredential,
-  ParsedToken,
+  updateProfile,
 } from '@angular/fire/auth';
 import { User } from '../types/user';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -57,6 +65,9 @@ export class UserService {
       },
       (err) => console.log(err)
     );
+  }
+  get userRef(): DocumentReference<DocumentData> {
+    return doc(collection(this.fs, 'users'), this.userData['user_id']);
   }
 
   get userData(): any | null {

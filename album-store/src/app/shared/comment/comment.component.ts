@@ -11,6 +11,7 @@ export class CommentComponent implements OnInit {
   @Input() comment: DocumentData = [];
   @Input() index: number = 0;
   @Input() user: any;
+  @Input() albumId: string = '';
 
   isOwner: boolean = false;
 

@@ -6,12 +6,13 @@ import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { UsersModule } from './users/users.module';
 import { SharedModule } from './shared/shared.module';
-import { provideFirebaseApp, getApp, initializeApp } from '@angular/fire/app';
+import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { JwtModule } from '@auth0/angular-jwt';
 import { environment } from 'src/environments/secretEnvironment';
 import * as buildEnv from 'src/environments/environment.development';
 import { AlbumsModule } from './albums/albums.module';
+import { CommentsModule } from './comments/comments.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -21,6 +22,7 @@ import { AlbumsModule } from './albums/albums.module';
     CoreModule,
     UsersModule,
     SharedModule,
+    CommentsModule,
     AppRoutingModule,
     JwtModule.forRoot({
       config: {

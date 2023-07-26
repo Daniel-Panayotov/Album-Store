@@ -12,9 +12,9 @@ const routes: Routes = [
     canActivate: [isLoggedActivate],
     component: NewAlbumComponent,
   },
-  { path: 'details/:id', component: DetailsComponent },
+  { path: ':id/details', component: DetailsComponent },
   {
-    path: 'edit/:id',
+    path: ':id/edit',
     canActivate: [isOwnerActivate],
     component: EditAlbumComponent,
   },

@@ -16,6 +16,13 @@ const routes: Routes = [
         (m) => m.AlbumsRoutingModule
       ),
   },
+  {
+    path: 'comments',
+    loadChildren: () =>
+      import('./comments/comments-routing.module').then(
+        (m) => m.CommentsRoutingModule
+      ),
+  },
   { path: '**', component: NotFoundComponent },
 ];
 

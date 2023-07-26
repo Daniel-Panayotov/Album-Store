@@ -1,0 +1,76 @@
+<div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+  <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+    <h2
+      class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight bg-base-255"
+    >
+      Comment on album
+    </h2>
+  </div>
+
+  <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+    <form
+      class="space-y-6"
+      #commentForm="ngForm"
+      (ngSubmit)="addComment(commentForm)"
+    >
+      <div>
+        <label
+          for="comment"
+          class="block text-sm font-medium leading-6 bg-base-255"
+          >Comment
+        </label>
+        <div class="mt-2">
+          <textarea
+            id="comment"
+            name="comment"
+            type="text"
+            rows="4"
+            autocomplete="comment"
+            placeholder="Comment here..."
+            class="block px-3 w-full rounded-md border-0 py-1.5 text-base-255 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            required
+            ngModel
+            #commentInput="ngModel"
+          >
+          </textarea>
+        </div>
+      </div>
+      <div
+        *ngIf="commentInput.errors?.['required']  && commentInput.touched"
+        class="alert alert-warning"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="stroke-current shrink-0 h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+          />
+        </svg>
+        <span>Warning: Comment is required!</span>
+      </div>
+
+      <div>
+        <button
+          [disabled]="commentForm.invalid"
+          class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+        >
+          Add Comment
+        </button>
+      </div>
+    </form>
+
+    <p class="mt-10 text-center text-sm text-gray-500">
+      <a
+        routerLink="/albums/{{ albumId }}/details"
+        class="font-semibold leading-6 text-indigo-600 hover:text-indigo-400"
+        >Go to details</a
+      >
+    </p>
+  </div>
+</div>

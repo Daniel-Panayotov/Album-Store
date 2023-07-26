@@ -35,7 +35,9 @@
         tabindex="0"
         class="dropdown-content z-[1] menu p-2 shadow-md shadow-black bg-gray-800 rounded-box w-52"
       >
-        <li><a>Edit</a></li>
+        <li>
+          <a routerLink="comments/{{ albumId }}/edit/{{ index }}">Edit</a>
+        </li>
         <li><a (click)="deleteComment()">Delete</a></li>
       </ul>
     </div>
