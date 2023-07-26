@@ -17,7 +17,6 @@ export class CommentComponent implements OnInit {
   constructor(private albumService: AlbumService) {}
 
   ngOnInit(): void {
-    console.log(this.comment, this.user);
     this.isOwner = this.owner.uid == this.user['user_id'] ? true : false;
   }
 

@@ -15,7 +15,7 @@ import {
 } from '@angular/fire/firestore';
 import { Album } from '../types/album';
 import { BehaviorSubject, Observable, Subject, map, of, switchMap } from 'rxjs';
-import { Comment } from '../types/comment';
+import { Comment, ProcessedComment } from '../types/comment';
 import { AlbumData } from '../types/albumData';
 
 @Injectable({
@@ -58,21 +58,34 @@ export class AlbumService {
     return collectionData(albumQuery);
   }
 
+  fixRefsInAlbum(album: DocumentData): DocumentData {
+    album['commentList'] = album['commentList'].map(
+      (comment: ProcessedComment) => {
+        comment.user = doc(collection(this.fs, 'users'), comment.user['uid']);
+        return comment;
+      }
+    );
+
+    return album;
+  }
+
+  deleteComment(album: DocumentData): Promise<void> {
+    return setDoc(doc(collection(this.fs, 'albums'), album['id']), album);
+  }
+
   getOne(id: string): Observable<DocumentData> {
     return docData(doc(this.fs, `albums/${id}`));
   }
 
-  deleteComment(id: number) {}
-
   getOnePopulated(id: string): Observable<DocumentData> {
     return docData(doc(this.fs, `albums/${id}`)).pipe(
-      switchMap((album: DocumentData) =>
-        album['commentList'][0] ? this.getWithComments(album) : of(album)
-      )
+      switchMap((album: DocumentData) => {
+        return album['commentList'][0] ? this.populateOne(album) : of(album);
+      })
     );
   }
 
-  getWithComments(album: DocumentData): Observable<DocumentData> {
+  populateOne(album: DocumentData): Observable<DocumentData> {
     const commentRefs: string[] = album['commentList'].map(
       (comment: Comment) => comment.user.id
     );

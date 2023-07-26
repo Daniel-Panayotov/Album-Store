@@ -1,10 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AlbumService } from '../album.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subject, of, takeUntil } from 'rxjs';
+import { Subject, of, takeUntil, from } from 'rxjs';
 import { switchMap, map, catchError } from 'rxjs/operators';
 import { DocumentData } from '@angular/fire/firestore';
 import { UserService } from 'src/app/users/user.service';
+import { Album } from 'src/app/types/album';
 
 @Component({
   selector: 'app-details',
@@ -13,7 +14,7 @@ import { UserService } from 'src/app/users/user.service';
 })
 export class DetailsComponent implements OnInit, OnDestroy {
   unsubscribe$$: Subject<void> = new Subject<void>();
-  album: DocumentData = [];
+  albumPopulated: DocumentData = [];
   isOwner: boolean = false;
 
   constructor(
@@ -28,7 +29,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
     if (isSure) {
       try {
-        await this.albumService.deleteAlbum(this.album['id']);
+        await this.albumService.deleteAlbum(this.albumPopulated['id']);
 
         this.router.navigate(['/home']);
       } catch (err) {
@@ -38,6 +39,26 @@ export class DetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.getAlbum();
+
+    this.albumService.commentDel$$
+      .pipe(
+        switchMap((index) => {
+          this.albumService.fixRefsInAlbum(this.albumPopulated);
+          this.albumPopulated['commentList'].splice(index, 1);
+          return from(this.albumService.deleteComment(this.albumPopulated));
+        }),
+        takeUntil(this.unsubscribe$$),
+        catchError((err) => {
+          console.log(err);
+
+          return of([]);
+        })
+      )
+      .subscribe();
+  }
+
+  getAlbum() {
     this.route.params
       .pipe(
         map((params) => params['id']),
@@ -50,10 +71,10 @@ export class DetailsComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe((album) => {
-        this.album = album;
+        this.albumPopulated = album;
 
         this.isOwner =
-          this.userService.userData['user_id'] == this.album['owner']
+          this.userService.userData['user_id'] == this.albumPopulated['owner']
             ? true
             : false;
       });
