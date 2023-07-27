@@ -38,6 +38,7 @@ testem.log
 /typings
 
 # System files
+/.firebase
 .DS_Store
 Thumbs.db
 secretEnvironment.ts
