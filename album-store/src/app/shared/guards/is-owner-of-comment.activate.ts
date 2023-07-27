@@ -34,7 +34,7 @@ export class isOwnerOfCommentActivate implements CanActivate {
       map((album: DocumentData) => {
         const comment = album['commentList'][Number(index)];
 
-        if (user?.['user_id'] == comment.user['uid']) {
+        if (user?.['user_id'] == comment.user['id']) {
           return true;
         }
         this.router.navigate(['/home']);
