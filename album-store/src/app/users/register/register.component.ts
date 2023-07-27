@@ -2,6 +2,7 @@ import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { UserService } from '../user.service';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment.development';
 
 @Component({
   selector: 'app-register',
@@ -10,8 +11,8 @@ import { Router } from '@angular/router';
 })
 export class RegisterComponent implements AfterViewInit {
   @ViewChild('registerForm') form: NgForm | undefined;
-  isBtnDisabled = false;
   isEmailInvalid = false;
+  emailRegex: RegExp = environment.email_regex;
 
   constructor(private userService: UserService, private router: Router) {}
 
@@ -22,7 +23,11 @@ export class RegisterComponent implements AfterViewInit {
 
     this.isEmailInvalid = false;
 
-    if (password != rePassword) {
+    if (!this.emailRegex.exec(email)) {
+      return;
+    }
+
+    if (password.length < 6 || password != rePassword) {
       return;
     }
 
