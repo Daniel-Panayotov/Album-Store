@@ -23,9 +23,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private userService: UserService
-  ) {
-    console.log(1);
-  }
+  ) {}
 
   async deleteAlbum(): Promise<void> {
     const isSure = window.confirm('Would you like to proceed with deletion?');

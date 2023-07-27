@@ -40,6 +40,8 @@ export class AlbumService {
   updateAlbum(album: AlbumData | DocumentData): Promise<void> {
     const id = album.id;
 
+    console.log(3);
+
     return setDoc(doc(collection(this.fs, 'albums'), id), album);
   }
 
@@ -74,6 +76,8 @@ export class AlbumService {
   }
 
   getOne(id: string): Observable<DocumentData> {
+    console.log(1);
+
     return docData(doc(this.fs, `albums/${id}`));
   }
 
