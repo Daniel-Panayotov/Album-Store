@@ -76,8 +76,6 @@ export class AlbumService {
   }
 
   getOne(id: string): Observable<DocumentData> {
-    console.log(1);
-
     return docData(doc(this.fs, `albums/${id}`));
   }
 

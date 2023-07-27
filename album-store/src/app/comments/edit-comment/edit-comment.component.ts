@@ -4,6 +4,7 @@ import { Subject, catchError, of, switchMap, takeUntil } from 'rxjs';
 import { CommentService } from '../comment.service';
 import { Comment } from 'src/app/types/comment';
 import { NgForm } from '@angular/forms';
+import { DocumentData } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-edit-comment',
@@ -13,6 +14,7 @@ import { NgForm } from '@angular/forms';
 export class EditCommentComponent implements OnInit, OnDestroy {
   unsubscribe$$: Subject<void> = new Subject();
   comment: Comment | undefined;
+  album: DocumentData = [];
   albumId: string = '';
   index: number = 0;
 
@@ -40,9 +42,9 @@ export class EditCommentComponent implements OnInit, OnDestroy {
           return of([]);
         })
       )
-      .subscribe((comment) => {
+      .subscribe(([comment, album]) => {
         this.comment = comment;
-        console.log(comment);
+        this.album = album;
       });
   }
 
@@ -52,21 +54,22 @@ export class EditCommentComponent implements OnInit, OnDestroy {
   }
 
   editComment(form: NgForm) {
-    const comment = form.value['comment'] as string;
-    const { user } = this.comment as Comment;
+    const { comment } = form.value;
 
     if (comment == '') {
       return;
     }
 
-    const newComment = {
+    this.album['commentList'][this.index] = {
       comment,
-      user,
+      user: this.comment?.['user'],
     };
 
     this.commentService
-      .editComment(newComment, this.albumId, this.index)
+      .editComment(this.album)
       .pipe(takeUntil(this.unsubscribe$$))
-      .subscribe();
+      .subscribe(() =>
+        this.router.navigate([`/albums/${this.albumId}/details`])
+      );
   }
 }

@@ -13,36 +13,22 @@ export class CommentService {
     private albumService: AlbumService
   ) {}
 
-  commentOnAlbum(albumId: string, comment: string) {
-    return this.albumService.getOne(albumId).pipe(
-      map((album: DocumentData) => {
-        const newComment = { comment, user: this.userService.userRef };
+  commentOnAlbum(album: DocumentData, comment: string): Observable<void> {
+    const newComment = { comment, user: this.userService.userRef };
 
-        album['commentList'].push(newComment);
-        console.log(2);
-
-        return album;
-      })
-      // ,switchMap((album) => from(this.albumService.updateAlbum(album)))
-    );
+    album['commentList'].push(newComment);
+    return from(this.albumService.updateAlbum(album));
   }
 
   getComment(albumId: string, commentIndex: number) {
     return this.albumService.getOne(albumId).pipe(
       map((album) => {
-        return album['commentList'][commentIndex];
+        return [album['commentList'][commentIndex], album];
       })
     );
   }
 
-  editComment(comment: any, albumId: string, index: number) {
-    return this.albumService.getOne(albumId).pipe(
-      map((album) => {
-        album['commentList'][index] = comment;
-
-        return album;
-      })
-      // switchMap((album) => from(this.albumService.updateAlbum(album)))
-    );
+  editComment(album: DocumentData) {
+    return from(this.albumService.updateAlbum(album));
   }
 }
