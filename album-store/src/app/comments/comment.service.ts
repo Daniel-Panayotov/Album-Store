@@ -20,8 +20,8 @@ export class CommentService {
 
         album['commentList'].push(newComment);
         return album;
-      })
-      // switchMap((album) => from(this.albumService.updateAlbum(album)))
+      }),
+      switchMap((album) => from(this.albumService.updateAlbum(album)))
     );
   }
 }
