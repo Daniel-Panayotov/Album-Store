@@ -8,6 +8,7 @@ import { UsersModule } from './users/users.module';
 import { SharedModule } from './shared/shared.module';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { provideAuth, getAuth } from '@angular/fire/auth';
 import { JwtModule } from '@auth0/angular-jwt';
 import { environment } from 'src/environments/secretEnvironment';
 import * as buildEnv from 'src/environments/environment.development';

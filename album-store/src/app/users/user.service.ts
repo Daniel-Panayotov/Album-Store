@@ -19,6 +19,7 @@ import {
 import { User } from '../types/user';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { LocalstorageService } from '../services/localstorage.service';
+import { Observable, from, map, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -66,6 +67,24 @@ export class UserService {
       (err) => console.log(err)
     );
   }
+
+  updateUserProfile(displayName: string, photoURL: string): Observable<void> {
+    const user = this.auth.currentUser;
+
+    if (user) {
+      return from(updateProfile(user, { displayName, photoURL }));
+    }
+    return of();
+  }
+
+  updateUserDbEntry(user: DocumentData): Observable<void> {
+    return from(setDoc(this.userRef, user));
+  }
+
+  getUser(): Observable<DocumentData> {
+    return docData(this.userRef);
+  }
+
   get userRef(): DocumentReference<DocumentData> {
     return doc(collection(this.fs, 'users'), this.userData['user_id']);
   }
@@ -84,33 +103,17 @@ export class UserService {
   }
 
   createUserDbEntry(userData: UserCredential): Promise<void> {
-    const {
-      displayName,
-      email,
-      emailVerified,
-      isAnonymous,
-      phoneNumber,
-      photoURL,
-      providerData,
-      providerId,
-      tenantId,
-      uid,
-      refreshToken,
-    } = userData.user;
+    const { displayName, email, phoneNumber, photoURL, providerId, uid } =
+      userData.user;
 
     const user = {
       boughtAlbums: [],
       displayName,
       email,
-      emailVerified,
-      isAnonymous,
       phoneNumber,
       photoURL,
-      providerData,
       providerId,
-      tenantId,
       uid,
-      refreshToken,
     };
     return setDoc(doc(collection(this.fs, 'users'), userData.user.uid), user);
   }

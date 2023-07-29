@@ -5,6 +5,7 @@ import { RegisterComponent } from './register/register.component';
 import { isLoggedActivate } from '../shared/guards/isLogged.activate';
 import { ProfileComponent } from './profile/profile.component';
 import { isNotLoggedActivate } from '../shared/guards/isNotLogged.activate';
+import { EditProfileComponent } from './edit-profile/edit-profile.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,11 @@ const routes: Routes = [
     path: 'profile',
     canActivate: [isLoggedActivate],
     component: ProfileComponent,
+  },
+  {
+    path: 'profile/edit',
+    canActivate: [isLoggedActivate],
+    component: EditProfileComponent,
   },
 ];
 

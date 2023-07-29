@@ -4,6 +4,7 @@ import { AlbumService } from '../album.service';
 import { DocumentData } from '@angular/fire/firestore';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
+import { environment } from 'src/environments/environment.development';
 
 @Component({
   selector: 'app-edit-album',
@@ -13,6 +14,7 @@ import { NgForm } from '@angular/forms';
 export class EditAlbumComponent implements OnInit, OnDestroy {
   @ViewChild('albumForm') form: NgForm | undefined;
   unsubscribe$$: Subject<void> = new Subject<void>();
+  urlRegex: RegExp = environment.url_regex;
   album: DocumentData = {
     band: 'Loading...',
     album: 'Loading...',

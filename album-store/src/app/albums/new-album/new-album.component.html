@@ -20,7 +20,6 @@
             id="band"
             name="band"
             type="text"
-            autocomplete="band"
             class="block w-full rounded-md border-0 py-1.5 text-base-255 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-base-255 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             required
             ngModel
@@ -62,7 +61,6 @@
             id="album"
             name="album"
             type="text"
-            autocomplete="album name"
             class="block w-full rounded-md border-0 py-1.5 text-base-255 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             required
             minlength="3"
@@ -103,11 +101,10 @@
             id="image"
             name="image"
             type="url"
-            autocomplete="album image"
             class="block w-full rounded-md border-0 py-1.5 text-base-255 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             required
             ngModel
-            pattern="^https:\/\/[\w\/\\\.-]+\.(jpg|JPG|png|PNG)$"
+            [pattern]="urlRegex"
             #imageInput="ngModel"
           />
         </div>

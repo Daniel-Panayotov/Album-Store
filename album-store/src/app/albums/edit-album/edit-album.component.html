@@ -110,7 +110,7 @@
             [ngModel]="album['image']"
             required
             ngModel
-            pattern="^https:\/\/[\w\/\\\.-]+\.(jpg|JPG|png|PNG)$"
+            [pattern]="urlRegex"
             #imageInput="ngModel"
           />
         </div>

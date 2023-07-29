@@ -4,6 +4,7 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/users/user.service';
 import { DocumentReference } from '@angular/fire/firestore';
+import { environment } from 'src/environments/environment.development';
 
 @Component({
   selector: 'app-new-album',
@@ -12,6 +13,7 @@ import { DocumentReference } from '@angular/fire/firestore';
 })
 export class NewAlbumComponent {
   @ViewChild('albumForm') form: NgForm | undefined;
+  urlRegex: RegExp = environment.url_regex;
 
   constructor(
     private albumService: AlbumService,

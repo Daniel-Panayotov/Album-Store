@@ -39,6 +39,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
   async logout() {
     try {
       await this.userService.logout();
+      this.router.navigate(['/home']);
     } catch (err) {
       console.log(err);
     }
