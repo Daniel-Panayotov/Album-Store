@@ -35,11 +35,13 @@ export class isOwnerActivate implements CanActivate {
           return true;
         }
 
-        this.router.navigate(['/home']);
+        this.router.navigate(['/unauthorised']);
         return false;
       }),
       catchError((err) => {
         console.log(err);
+        this.router.navigate(['/error']);
+
         return of(false);
       })
     );

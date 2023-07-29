@@ -34,6 +34,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
         this.router.navigate(['/home']);
       } catch (err) {
+        this.router.navigate(['/error']);
         console.log(err);
       }
     }
@@ -51,6 +52,8 @@ export class DetailsComponent implements OnInit, OnDestroy {
         }),
         takeUntil(this.unsubscribe$$),
         catchError((err) => {
+          this.router.navigate(['/error']);
+
           console.log(err);
 
           return of([]);
@@ -66,6 +69,8 @@ export class DetailsComponent implements OnInit, OnDestroy {
         switchMap((id) => this.albumService.getOnePopulated(id)),
         takeUntil(this.unsubscribe$$),
         catchError((err) => {
+          this.router.navigate(['/error']);
+
           console.log(err);
 
           return of([]);

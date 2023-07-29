@@ -24,7 +24,7 @@ export class isLoggedActivate implements CanActivate {
     const token = !!this.userService.userToken;
 
     if (!token) {
-      this.router.navigate(['/home']);
+      this.router.navigate(['/unauthorised']);
     }
 
     return token;

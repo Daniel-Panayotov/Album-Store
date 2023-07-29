@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subject, catchError, of, takeUntil } from 'rxjs';
 import { UserService } from '../user.service';
 import { DocumentData } from '@angular/fire/firestore';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -13,7 +14,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   user: DocumentData = [];
   isLoading: boolean = true;
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit(): void {
     this.userService
@@ -21,6 +22,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
       .pipe(
         takeUntil(this.unsubscribe$$),
         catchError((err) => {
+          this.router.navigate(['/error']);
+
           console.log(err);
 
           return of([]);

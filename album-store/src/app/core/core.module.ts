@@ -7,8 +7,14 @@ import { FooterComponent } from './footer/footer.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule } from '@angular/forms';
+import { ErrorComponent } from './error/error.component';
+import { UnauthorisedComponent } from './unathorised/unathorised.component';
 
-const routes: Routes = [{ path: 'home', component: HomeComponent }];
+const routes: Routes = [
+  { path: 'home', component: HomeComponent },
+  { path: 'unauthorised', component: UnauthorisedComponent },
+  { path: 'error', component: ErrorComponent },
+];
 
 @NgModule({
   declarations: [
@@ -16,6 +22,8 @@ const routes: Routes = [{ path: 'home', component: HomeComponent }];
     HomeComponent,
     FooterComponent,
     NotFoundComponent,
+    ErrorComponent,
+    UnauthorisedComponent,
   ],
   imports: [
     CommonModule,

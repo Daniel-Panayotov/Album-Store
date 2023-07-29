@@ -37,11 +37,12 @@ export class isOwnerOfCommentActivate implements CanActivate {
         if (user?.['user_id'] == comment.user['id']) {
           return true;
         }
-        this.router.navigate(['/home']);
+        this.router.navigate(['/unauthorised']);
         return false;
       }),
       catchError((err) => {
         console.log(err);
+        this.router.navigate(['/error']);
 
         return of(false);
       })

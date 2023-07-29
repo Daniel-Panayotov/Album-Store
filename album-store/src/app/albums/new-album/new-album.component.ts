@@ -30,6 +30,8 @@ export class NewAlbumComponent implements OnInit, OnDestroy {
       .pipe(
         takeUntil(this.unsubscribe$$),
         catchError((err) => {
+          this.router.navigate(['/error']);
+
           console.log(err);
 
           return of([]);
@@ -64,6 +66,8 @@ export class NewAlbumComponent implements OnInit, OnDestroy {
       .pipe(
         takeUntil(this.unsubscribe$$),
         catchError((err) => {
+          this.router.navigate(['/error']);
+
           console.log(err);
 
           return of([]);

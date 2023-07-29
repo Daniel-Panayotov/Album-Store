@@ -31,6 +31,8 @@ export class LoginComponent implements AfterViewInit {
 
       this.router.navigate(['/home']);
     } catch (err) {
+      this.router.navigate(['/error']);
+
       console.log(err);
     }
   }

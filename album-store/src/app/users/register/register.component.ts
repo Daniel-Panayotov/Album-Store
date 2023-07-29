@@ -40,6 +40,8 @@ export class RegisterComponent implements AfterViewInit {
     } catch (err: any) {
       if (err.message.includes('email')) {
         this.isEmailInvalid = true;
+      } else {
+        this.router.navigate(['/error']);
       }
       console.log(err);
     }

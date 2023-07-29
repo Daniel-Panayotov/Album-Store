@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DocumentData } from '@angular/fire/firestore';
 import { AlbumService } from 'src/app/albums/album.service';
 import { Subject, switchMap, takeUntil, catchError, of } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -14,7 +15,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   pageI: number = 0;
   hasMoreAlbums: boolean = false;
 
-  constructor(private albumService: AlbumService) {}
+  constructor(private albumService: AlbumService, private router: Router) {}
 
   ngOnInit(): void {
     this.albumService.homeAlbums$$
@@ -22,6 +23,8 @@ export class HomeComponent implements OnInit, OnDestroy {
         switchMap((search) => this.albumService.getAll(search)),
         takeUntil(this.unsubscribe$$),
         catchError((err) => {
+          this.router.navigate(['/error']);
+
           console.log(err);
 
           return of([]);
@@ -39,7 +42,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   calcIfMoreAlbums() {
-    this.hasMoreAlbums = this.albums.length - this.pageI * 2 > 0;
+    this.hasMoreAlbums = this.albums.length - (this.pageI + 6) > 0;
   }
 
   back() {

@@ -43,6 +43,8 @@ export class NewCommentComponent implements OnInit, OnDestroy {
         switchMap(() => this.userService.getUser()),
         takeUntil(this.unsubscribe$$),
         catchError((err) => {
+          this.router.navigate(['/error']);
+
           console.log(err);
 
           return of([]);
@@ -70,6 +72,8 @@ export class NewCommentComponent implements OnInit, OnDestroy {
       .pipe(
         takeUntil(this.unsubscribe$$),
         catchError((err) => {
+          this.router.navigate(['/error']);
+
           console.log(err);
 
           return of([]);

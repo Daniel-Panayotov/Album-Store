@@ -24,6 +24,8 @@ export class EditProfileComponent implements OnInit, OnDestroy {
       .pipe(
         takeUntil(this.unsubscribe$$),
         catchError((err) => {
+          this.router.navigate(['/error']);
+
           console.log(err);
 
           return of([]);
@@ -55,6 +57,8 @@ export class EditProfileComponent implements OnInit, OnDestroy {
         switchMap(() => this.userService.updateUserDbEntry(this.user)),
         takeUntil(this.unsubscribe$$),
         catchError((err) => {
+          this.router.navigate(['/error']);
+
           console.log(err);
 
           return of([]);

@@ -47,6 +47,8 @@ export class EditAlbumComponent implements OnInit, OnDestroy {
 
       this.router.navigate([`/home`]);
     } catch (err) {
+      this.router.navigate(['/error']);
+
       console.log(err);
     }
   }
@@ -58,6 +60,8 @@ export class EditAlbumComponent implements OnInit, OnDestroy {
         switchMap((id) => this.albumService.getOne(id)),
         takeUntil(this.unsubscribe$$),
         catchError((err) => {
+          this.router.navigate(['/error']);
+
           console.log(err);
 
           return of([]);

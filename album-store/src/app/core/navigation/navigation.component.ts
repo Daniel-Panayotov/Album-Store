@@ -27,6 +27,8 @@ export class NavigationComponent implements OnInit, OnDestroy {
       .pipe(
         takeUntil(this.unsubscribe$$),
         catchError((err) => {
+          this.router.navigate(['/error']);
+
           console.log(err);
           return of([]);
         })
@@ -62,6 +64,8 @@ export class NavigationComponent implements OnInit, OnDestroy {
       await this.userService.logout();
       this.router.navigate(['/home']);
     } catch (err) {
+      this.router.navigate(['/error']);
+
       console.log(err);
     }
   }

@@ -20,6 +20,7 @@ import { User } from '../types/user';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { LocalstorageService } from '../services/localstorage.service';
 import { Observable, from, map, of } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -31,7 +32,8 @@ export class UserService {
   constructor(
     private fs: Firestore,
     private jwtHelper: JwtHelperService,
-    private LsService: LocalstorageService
+    private LsService: LocalstorageService,
+    private router: Router
   ) {
     this.setAuthObservable();
     this.isTokenExpired();
@@ -56,6 +58,8 @@ export class UserService {
               this.LsService.clearToken();
             }
           } catch (err) {
+            this.router.navigate(['/error']);
+
             console.log(err);
           }
         } else {
@@ -64,7 +68,11 @@ export class UserService {
 
         this.userToken = this.LsService.getToken();
       },
-      (err) => console.log(err)
+      (err) => {
+        this.router.navigate(['/error']);
+
+        console.log(err);
+      }
     );
   }
 
