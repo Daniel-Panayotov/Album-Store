@@ -11,6 +11,8 @@ import { Subject, switchMap, takeUntil, catchError, of } from 'rxjs';
 export class HomeComponent implements OnInit, OnDestroy {
   albums: DocumentData[] = [];
   unsubscribe$$: Subject<void> = new Subject<void>();
+  pageI: number = 0;
+  hasMoreAlbums: boolean = false;
 
   constructor(private albumService: AlbumService) {}
 
@@ -26,12 +28,27 @@ export class HomeComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe((albums: DocumentData[]) => {
-        this.albums.push(...albums);
+        this.albums = albums;
+        this.calcIfMoreAlbums();
       });
   }
 
   ngOnDestroy(): void {
     this.unsubscribe$$.next();
     this.unsubscribe$$.complete();
+  }
+
+  calcIfMoreAlbums() {
+    this.hasMoreAlbums = this.albums.length - this.pageI * 2 > 0;
+  }
+
+  back() {
+    this.pageI -= 6;
+    this.calcIfMoreAlbums();
+  }
+
+  forward() {
+    this.pageI += 6;
+    this.calcIfMoreAlbums();
   }
 }

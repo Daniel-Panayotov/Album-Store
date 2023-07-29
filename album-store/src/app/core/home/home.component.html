@@ -3,6 +3,8 @@
     <span class="text-gray-300 text-2xl">Most popular albums</span>
   </div>
   <div
+    *ngIf="pageI != 0"
+    (click)="back()"
     class="absolute left rounded-full bg-white flex items-center justify-center hover:bg-gray-200 hover:cursor-pointer"
   >
     <svg
@@ -18,9 +20,14 @@
     </svg>
   </div>
   <div class="bg-base justify-start flex">
-    <app-album-card *ngFor="let album of albums" [album]="album" />
+    <app-album-card
+      *ngFor="let album of albums | slice : pageI : pageI + 6"
+      [album]="album"
+    />
   </div>
   <div
+    *ngIf="hasMoreAlbums"
+    (click)="forward()"
     class="absolute right rounded-full bg-white flex items-center justify-center hover:bg-gray-200 hover:cursor-pointer"
   >
     <svg
