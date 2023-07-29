@@ -14,7 +14,15 @@ import {
   deleteDoc,
 } from '@angular/fire/firestore';
 import { Album } from '../types/album';
-import { BehaviorSubject, Observable, Subject, map, of, switchMap } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  Subject,
+  from,
+  map,
+  of,
+  switchMap,
+} from 'rxjs';
 import { Comment, ProcessedComment } from '../types/comment';
 import { AlbumData } from '../types/albumData';
 
@@ -31,10 +39,10 @@ export class AlbumService {
     return deleteDoc(doc(collection(this.fs, 'albums'), id));
   }
 
-  createAlbum(album: Album): Promise<void> {
+  createAlbum(album: Album): Observable<void> {
     const id = doc(collection(this.fs, 'id')).id;
     album.id = id;
-    return setDoc(doc(collection(this.fs, 'albums'), id), album);
+    return from(setDoc(doc(collection(this.fs, 'albums'), id), album));
   }
 
   updateAlbum(album: AlbumData | DocumentData): Promise<void> {

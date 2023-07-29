@@ -37,13 +37,13 @@ export class UserService {
     this.isTokenExpired();
   }
 
-  isTokenExpired() {
+  private isTokenExpired() {
     if (this.jwtHelper.isTokenExpired(this.userToken)) {
       this.LsService.clearToken();
     }
   }
 
-  setAuthObservable(): void {
+  private setAuthObservable(): void {
     this.auth.onAuthStateChanged(
       async (user) => {
         if (user) {
@@ -107,7 +107,8 @@ export class UserService {
       userData.user;
 
     const user = {
-      boughtAlbums: [],
+      albums: [],
+      comments: [],
       displayName,
       email,
       phoneNumber,
