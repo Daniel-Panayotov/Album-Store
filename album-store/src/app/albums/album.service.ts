@@ -25,6 +25,7 @@ import {
 } from 'rxjs';
 import { Comment, ProcessedComment } from '../types/comment';
 import { AlbumData } from '../types/albumData';
+import { UserService } from '../users/user.service';
 
 @Injectable({
   providedIn: 'root',
@@ -33,16 +34,24 @@ export class AlbumService {
   homeAlbums$$ = new BehaviorSubject<string>('');
   commentDel$$ = new Subject<number>();
 
-  constructor(private fs: Firestore) {}
+  constructor(private fs: Firestore, private userService: UserService) {}
 
   deleteAlbum(id: string): Promise<void> {
     return deleteDoc(doc(collection(this.fs, 'albums'), id));
   }
 
-  createAlbum(album: Album): Observable<void> {
+  createAlbum(album: Album, user: DocumentData): Observable<void> {
     const id = doc(collection(this.fs, 'id')).id;
     album.id = id;
-    return from(setDoc(doc(collection(this.fs, 'albums'), id), album));
+
+    return from(setDoc(doc(collection(this.fs, 'albums'), id), album)).pipe(
+      map(() => {
+        user['albums'].push(doc(collection(this.fs, 'albums'), id));
+
+        return user;
+      }),
+      switchMap((user) => this.userService.updateUserDbEntry(user))
+    );
   }
 
   updateAlbum(album: AlbumData | DocumentData): Promise<void> {
