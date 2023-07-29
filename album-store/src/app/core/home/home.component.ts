@@ -25,7 +25,9 @@ export class HomeComponent implements OnInit, OnDestroy {
           return of([]);
         })
       )
-      .subscribe((albums: DocumentData[]) => (this.albums = albums));
+      .subscribe((albums: DocumentData[]) => {
+        this.albums.push(...albums);
+      });
   }
 
   ngOnDestroy(): void {

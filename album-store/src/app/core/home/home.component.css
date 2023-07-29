@@ -2,3 +2,17 @@
   border-radius: 10px;
   min-height: 31.75rem;
 }
+
+.left {
+  transform: translate(4rem, 11rem);
+  width: 3rem;
+  height: 3rem;
+  z-index: 2;
+}
+
+.right {
+  transform: translate(100rem, -20rem);
+  width: 3rem;
+  height: 3rem;
+  z-index: 2;
+}

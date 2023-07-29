@@ -2,7 +2,36 @@
   <div class="ml-7 pt-3">
     <span class="text-gray-300 text-2xl">Most popular albums</span>
   </div>
+  <div
+    class="absolute left rounded-full bg-white flex items-center justify-center hover:bg-gray-200 hover:cursor-pointer"
+  >
+    <svg
+      class="rotate-180"
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+    >
+      <polygon
+        points="7.293 4.707 14.586 12 7.293 19.293 8.707 20.707 17.414 12 8.707 3.293 7.293 4.707"
+      />
+    </svg>
+  </div>
   <div class="bg-base justify-start flex">
     <app-album-card *ngFor="let album of albums" [album]="album" />
+  </div>
+  <div
+    class="absolute right rounded-full bg-white flex items-center justify-center hover:bg-gray-200 hover:cursor-pointer"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+    >
+      <polygon
+        points="7.293 4.707 14.586 12 7.293 19.293 8.707 20.707 17.414 12 8.707 3.293 7.293 4.707"
+      />
+    </svg>
   </div>
 </div>

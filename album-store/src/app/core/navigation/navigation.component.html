@@ -43,7 +43,11 @@
       <label tabindex="0" class="btn btn-ghost btn-circle avatar">
         <div class="w-10 rounded-full">
           <img
-            src="https://winaero.com/blog/wp-content/uploads/2019/09/Chrome-Incognito-Mode-Icon-256.png"
+            src="{{
+              user['photoURL']
+                ? user['photoURL']
+                : 'https://winaero.com/blog/wp-content/uploads/2019/09/Chrome-Incognito-Mode-Icon-256.png'
+            }}"
           />
         </div>
       </label>

@@ -27,8 +27,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe((user) => {
-        console.log(user);
-
         this.user = user;
         this.isLoading = false;
       });
