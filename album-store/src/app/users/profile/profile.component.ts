@@ -11,6 +11,7 @@ import { DocumentData } from '@angular/fire/firestore';
 export class ProfileComponent implements OnInit, OnDestroy {
   unsubscribe$$: Subject<void> = new Subject();
   user: DocumentData = [];
+  isLoading: boolean = true;
 
   constructor(private userService: UserService) {}
 
@@ -29,6 +30,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
         console.log(user);
 
         this.user = user;
+        this.isLoading = false;
       });
   }
 

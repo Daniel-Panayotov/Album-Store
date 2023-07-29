@@ -22,17 +22,19 @@
             <div class="flex justify-center py-4 lg:pt-4 pt-8">
               <div class="mr-4 p-3 text-center">
                 <span
+                  *ngIf="!isLoading"
                   class="text-xl font-bold block uppercase tracking-wide text-blueGray-600"
                 >
-                  10
+                  {{ user["albums"].length }}
                 </span>
                 <span class="text-sm text-blueGray-400">Albums</span>
               </div>
               <div class="lg:mr-4 p-3 text-center">
                 <span
+                  *ngIf="!isLoading"
                   class="text-xl font-bold block uppercase tracking-wide text-blueGray-600"
                 >
-                  89
+                  {{ user["comments"].length }}
                 </span>
                 <span class="text-sm text-blueGray-400">Comments</span>
               </div>
@@ -60,19 +62,7 @@
             </button>
           </div>
         </div>
-        <div class="mt-10 py-10 border-t border-blueGray-200 text-center">
-          <div class="flex flex-wrap justify-center">
-            <div class="w-full lg:w-9/12 px-4">
-              <p class="mb-4 text-lg leading-relaxed text-blueGray-700">
-                An artist of considerable range, Jenna the name taken by
-                Melbourne-raised, Brooklyn-based Nick Murphy writes, performs
-                and records all of his own music, giving it a warm, intimate
-                feel with a solid groove structure. An artist of considerable
-                range.
-              </p>
-            </div>
-          </div>
-        </div>
+        <div class="mt-10 py-4 border-t border-blueGray-200 text-center"></div>
       </div>
     </div>
   </div>
