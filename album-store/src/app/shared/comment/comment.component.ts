@@ -19,6 +19,8 @@ export class CommentComponent implements OnInit {
 
   ngOnInit(): void {
     this.isOwner = this.owner.uid == this.user['user_id'] ? true : false;
+
+    console.log(this.comment);
   }
 
   async deleteComment(): Promise<void> {

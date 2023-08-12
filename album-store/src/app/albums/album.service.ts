@@ -40,18 +40,11 @@ export class AlbumService {
     return deleteDoc(doc(collection(this.fs, 'albums'), id));
   }
 
-  createAlbum(album: Album, user: DocumentData): Observable<void> {
+  createAlbum(album: Album): Observable<void> {
     const id = doc(collection(this.fs, 'id')).id;
     album.id = id;
 
-    return from(setDoc(doc(collection(this.fs, 'albums'), id), album)).pipe(
-      map(() => {
-        user['albums'].push(doc(collection(this.fs, 'albums'), id));
-
-        return user;
-      }),
-      switchMap((user) => this.userService.updateUserDbEntry(user))
-    );
+    return from(setDoc(doc(collection(this.fs, 'albums'), id), album));
   }
 
   updateAlbum(album: AlbumData | DocumentData): Promise<void> {
@@ -102,28 +95,35 @@ export class AlbumService {
   }
 
   populateOne(album: DocumentData): Observable<DocumentData> {
-    const commentRefs: string[] = album['commentList'].map(
+    let commentRefs: string[] = album['commentList'].map(
       (comment: Comment) => comment.user.id
     );
+
+    commentRefs = [...new Set(commentRefs)];
 
     const usersQuery = query(
       collection(this.fs, 'users'),
       where('uid', 'in', commentRefs)
     );
 
+    let count = 0;
     return collectionData(usersQuery).pipe(
       map((users: DocumentData[]) => {
-        album['commentList'] = album['commentList'].map((comment: Comment) => {
-          const user = users.find(
-            (user: DocumentData) => user['uid'] == comment['user'].id
+        if (count == 0) {
+          count++;
+          album['commentList'] = album['commentList'].map(
+            (comment: Comment) => {
+              const user = users.find(
+                (user: DocumentData) => user['uid'] == comment['user'].id
+              );
+
+              return {
+                comment: comment['comment'],
+                user,
+              };
+            }
           );
-
-          return {
-            comment: comment['comment'],
-            user,
-          };
-        });
-
+        }
         return album;
       })
     );

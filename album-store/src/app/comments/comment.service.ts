@@ -19,22 +19,11 @@ export class CommentService {
     private fs: Firestore
   ) {}
 
-  commentOnAlbum(
-    album: DocumentData,
-    comment: string,
-    user: DocumentData
-  ): Observable<void> {
+  commentOnAlbum(album: DocumentData, comment: string): Observable<void> {
     const newComment = { comment, user: this.userService.userRef };
-    const userComment = {
-      comment,
-      album: doc(collection(this.fs, 'albums'), album['id']),
-    };
 
-    user['comments'].push(userComment);
     album['commentList'].push(newComment);
-    return from(this.albumService.updateAlbum(album)).pipe(
-      switchMap(() => this.userService.updateUserDbEntry(user))
-    );
+    return from(this.albumService.updateAlbum(album));
   }
 
   getComment(albumId: string, commentIndex: number) {

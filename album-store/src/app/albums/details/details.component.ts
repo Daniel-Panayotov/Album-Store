@@ -43,11 +43,18 @@ export class DetailsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getAlbum();
 
+    this.commentDelSubject();
+  }
+
+  commentDelSubject() {
     this.albumService.commentDel$$
       .pipe(
         switchMap((index) => {
           this.albumService.fixRefsInAlbum(this.albumPopulated);
-          this.albumPopulated['commentList'].splice(index, 1);
+          const deletedComment = this.albumPopulated['commentList'].splice(
+            index,
+            1
+          );
           return from(this.albumService.deleteComment(this.albumPopulated));
         }),
         takeUntil(this.unsubscribe$$),
@@ -67,6 +74,12 @@ export class DetailsComponent implements OnInit, OnDestroy {
       .pipe(
         map((params) => params['id']),
         switchMap((id) => this.albumService.getOnePopulated(id)),
+        map((album) => {
+          this.albumPopulated = album;
+
+          this.isOwner =
+            this.user['user_id'] == this.albumPopulated['owner'] ? true : false;
+        }),
         takeUntil(this.unsubscribe$$),
         catchError((err) => {
           this.router.navigate(['/error']);
@@ -77,11 +90,6 @@ export class DetailsComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe((album) => {
-        this.albumPopulated = album;
-
-        this.isOwner =
-          this.user['user_id'] == this.albumPopulated['owner'] ? true : false;
-
         this.isLoading = false;
       });
   }

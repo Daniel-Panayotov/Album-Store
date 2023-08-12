@@ -62,7 +62,7 @@ export class NewAlbumComponent implements OnInit, OnDestroy {
     };
 
     this.albumService
-      .createAlbum(newAlbum, this.user)
+      .createAlbum(newAlbum)
       .pipe(
         takeUntil(this.unsubscribe$$),
         catchError((err) => {

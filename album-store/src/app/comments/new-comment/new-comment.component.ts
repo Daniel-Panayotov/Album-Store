@@ -16,14 +16,12 @@ export class NewCommentComponent implements OnInit, OnDestroy {
   unsubscribe$$: Subject<void> = new Subject<void>();
   albumId: string = '';
   album: DocumentData = [];
-  user: DocumentData = [];
 
   constructor(
     private route: ActivatedRoute,
     private commentService: CommentService,
     private router: Router,
-    private albumService: AlbumService,
-    private userService: UserService
+    private albumService: AlbumService
   ) {}
 
   ngOnInit(): void {
@@ -40,7 +38,6 @@ export class NewCommentComponent implements OnInit, OnDestroy {
         map((album) => {
           this.album = album;
         }),
-        switchMap(() => this.userService.getUser()),
         takeUntil(this.unsubscribe$$),
         catchError((err) => {
           this.router.navigate(['/error']);
@@ -50,9 +47,7 @@ export class NewCommentComponent implements OnInit, OnDestroy {
           return of([]);
         })
       )
-      .subscribe((user) => {
-        this.user = user;
-      });
+      .subscribe((user) => {});
   }
 
   ngOnDestroy(): void {
@@ -68,7 +63,7 @@ export class NewCommentComponent implements OnInit, OnDestroy {
     }
 
     this.commentService
-      .commentOnAlbum(this.album, comment, this.user)
+      .commentOnAlbum(this.album, comment)
       .pipe(
         takeUntil(this.unsubscribe$$),
         catchError((err) => {

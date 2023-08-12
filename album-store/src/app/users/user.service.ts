@@ -115,8 +115,6 @@ export class UserService {
       userData.user;
 
     const user = {
-      albums: [],
-      comments: [],
       displayName,
       email,
       phoneNumber,
