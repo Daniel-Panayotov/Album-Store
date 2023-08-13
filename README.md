@@ -4,7 +4,7 @@ The website has 13 pages and 17 components
 
 -------Libraries-------
 
-1-angular
+1-angular(framework)
 2-angular/fire(firebase)
 3-tailwindcss, daisyui
 4-auth0/angular-jwt
