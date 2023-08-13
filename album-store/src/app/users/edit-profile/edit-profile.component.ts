@@ -12,7 +12,7 @@ import { DocumentData } from '@angular/fire/firestore';
   styleUrls: ['./edit-profile.component.css'],
 })
 export class EditProfileComponent implements OnInit, OnDestroy {
-  urlRegex: RegExp = environment.url_regex;
+  urlRegex: RegExp = environment.profileImage_regex;
   unsubscribe$$: Subject<void> = new Subject();
   user: DocumentData = [];
 
