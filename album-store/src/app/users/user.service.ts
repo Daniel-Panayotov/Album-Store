@@ -21,6 +21,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { LocalstorageService } from '../services/localstorage.service';
 import { Observable, from, map, of } from 'rxjs';
 import { Router } from '@angular/router';
+import { userToken } from '../types/userToken';
 
 @Injectable({
   providedIn: 'root',

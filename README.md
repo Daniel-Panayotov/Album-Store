@@ -36,25 +36,3 @@ The website has 13 pages and 17 components
 /comments/:id/new - new-comment component
 /comments/:id/edit/:index - edit-comment component
 
--------Architecture-------
-                                   main.ts
-                                      |
-                                app.module.ts
-							    |           |
-   user/comment/album <- services	        components
-						    |               |    |    |
-							|	   	 non-lazy	 |	 lazy modules -> Users/Albums/Comments
-		    firebase  <- backend  	       |     |
-				|				    	  Core   |
-				|				  		         |
-	   auth/firestore/hosting	  				 |		             
-                                            -------------  ->  -----------  ->  -----------
-						                   |  component  |    |  service  |    |  backend  |
-						                    -------------  <-  -----------  <-  -----------
-										     ^ binding |
-										     |         |
-											------------
-										   |  template  |
-											------------
-											
-												
