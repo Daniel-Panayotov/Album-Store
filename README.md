@@ -1,6 +1,6 @@
 The website has 13 pages and 17 components
 
-<h1>-------Libraries-------<h1/>
+-------Libraries-------
 
 1-angular(framework)
 2-angular/fire(firebase)
