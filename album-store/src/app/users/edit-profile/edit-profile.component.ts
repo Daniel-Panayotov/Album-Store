@@ -49,7 +49,7 @@ export class EditProfileComponent implements OnInit, OnDestroy {
     }
 
     this.user['displayName'] = username;
-    this.user['photoURL'] = image;
+    this.user['photoURL'] = image == '' ? null : image;
 
     this.userService
       .updateUserProfile(username, image)
