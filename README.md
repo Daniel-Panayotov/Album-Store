@@ -1,5 +1,3 @@
-# Album-Store
-
 The website has 13 pages and 17 components
 
 -------Libraries-------
